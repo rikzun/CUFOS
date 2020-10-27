@@ -1,0 +1,130 @@
+body {
+    min-width: 100%;
+    min-height: 100vh;
+    background-image: url('https://wallpapercave.com/wp/wp3137905.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin: 0px;
+    overflow: hidden;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;     
+}
+p {
+    margin: 0;
+}
+.taskbar {
+    background-color: rgba(0, 0, 0, 0.836);
+    display: inline-flex;
+    color: white;
+    position: absolute;
+    width: 100vw;
+    height: 3vh;
+    font-size: 2.2vh;
+    z-index: 10;
+    box-shadow: 0 0.5rem 0.9rem 0.2rem rgb(0 0 0 / 12%);
+}
+.desktop {
+    z-index: 1;
+    min-width: 97.1vw;
+    min-height: 91.3vh;
+    margin-top: 3vh;
+    position: fixed;
+    padding: 3vh;
+}
+.desktopFile {
+    position: absolute;
+    color: white;
+    text-align: center;
+    width: 4.5vw;
+    height: 4.5vw;
+    justify-content: center;
+    border-radius: 1vh;
+}
+.desktopFile:hover {
+    background-color: #9fd3ff29;
+}
+.desktopFileActive {
+    background-color: #9fd2ff6b !important;
+}
+.desktopFileIcon {
+    font-size: 5.5vh;
+    display: inline-table;
+    align-items: center;
+    padding-top: .6vh;
+}
+.desktopFileTitle {
+    font-size: 1.5vh;
+}
+.taskbarItems {
+    margin-left: .5vh;
+    width: fit-content;
+    display: inline-flex;
+}
+.taskbarElement {
+    display: inline-flex !important;
+    align-items: center;
+    padding: 0 .5vh 0px .5vh;
+}
+.taskbarElement:hover {
+    background-color: lightseagreen;
+}
+.ui-resizable-e, .ui-resizable-w {
+	width: 10px;
+}
+.ui-resizable-n, .ui-resizable-s {
+	height: 10px;
+}
+.ui-resizable-se {
+    right: -5px;
+    bottom: -5px;
+}
+.ui-resizable-se, .ui-resizable-sw, .ui-resizable-ne, .ui-resizable-nw {
+	width: 12px;
+    height: 12px;
+}
+.ui-icon {
+    display: none;
+    background-image: none;
+}
+.window {
+    z-index: 2;
+    position: fixed;
+    display: block;
+    color: white;
+    background-color: #2D2D2D;
+    box-shadow: 0 0 .3rem 0 rgba(0, 0, 0, 0.75);
+    border-radius: .3rem;
+    border: 1px #5C5C5C solid;
+    overflow: hidden;
+}
+.windowTitleBar {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #494949;
+    position: relative;
+    color: white;
+    width: 100%;
+    height: 1.4em;
+    font-size: 1.2rem;
+    border-bottom: 1px #141414 solid;
+}
+.windowTitle {
+    display: inline-block;
+    margin-left: .6rem;
+}
+.windowTitleButtons {
+    display: inline-flex;
+    margin-right: .6rem;
+}
+.minimize, .maximize, .close {
+    display: flex;
+    padding-left: .3rem;
+}
+.windowContent {
+    padding-left: 5px;
+}
+.fa, .fab, .fad, .fal, .far, .fas {
+    line-height: normal !important;
+}

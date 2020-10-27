@@ -1,0 +1,65 @@
+<!doctype html>
+<head>
+    <script src="./scripts/nmf/jquery-3.5.1.js"></script>
+    <script src="./scripts/nmf/jquery-ui.js"></script>
+    <script src="./scripts/nmf/jquery.ui.resizable.snap.ext.js"></script>
+    <script src="./scripts/nmf/font-awesome.js"></script>
+    <script src="./scripts/script.js"></script>
+    <link rel="stylesheet" href="./styles/nmf/jquery-ui.css">
+    <link rel="stylesheet" href="./styles/style.css">
+
+    <meta charset="utf-8">
+    <title>CUFOS</title>
+
+    <meta name="author" content="RikZun">
+    <meta name="description" content="Концепт операционной системы.">
+</head>
+<body>
+    <div class="taskbar">
+        <div class="taskbarItems">
+            <i class="taskbarElement fas fa-expand"></i>
+            <div class="taskbarElement"><p data-default-string="SYSTEM"></p></div>
+            <div class="taskbarElement"><p data-default-string="PC"></p></div>
+			<div id="change_lang" class="taskbarElement"><p data-default-string="CHANGE_LANG"></p></div>
+        </div>
+    </div>
+
+    <div class="desktop" onmousemove="selector(event)">
+        <div class="desktopFile" id="gen" data-open-win="#win">
+            <i class="desktopFileIcon fas fa-file-alt"></i>
+            <div class="desktopFileTitle">unnamed.txt</div>
+        </div>
+        <div class="desktopFile" id="gen" data-open-win="#win">
+            <i class="desktopFileIcon fas fa-file-alt"></i>
+            <div class="desktopFileTitle">unnamed.txt</div>
+        </div>
+    </div>
+
+    <div class="window" id="win" style="display: none; width: 30rem; height: 20rem; left: 50%; top: 50%">
+        <div class="windowTitleBar">
+            <div class="windowTitle"><p data-default-string="TITLE"></p></div>
+            <div class="windowTitleButtons">
+                <div class="minimize">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 12 12">
+                        <path id="Контур_48" data-name="Контур 48" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#2acb42"/>
+                    </svg>                      
+                </div>
+                <div class="maximize">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 12 12">
+                        <path id="Контур_47" data-name="Контур 47" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#ffc12f"/>
+                    </svg>
+                </div>
+                <div class="close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 12 12">
+                        <path id="Контур_46" data-name="Контур 46" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#ff6157"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="windowContent">
+			<p data-default-string="CONTENT"></p>
+		</div>
+    </div>
+
+</body>
+</html>
