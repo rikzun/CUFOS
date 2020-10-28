@@ -8,14 +8,14 @@ const windows = {
     maximize: {}
 }
 
-const desktop = {
-    files: {},
-    selected: [],
-    vidgets: {}
-}
+// const desktopObjects = {
+//     files: {},
+//     vidgets: {}
+// }
 
 const translateStrings = {
-    'TITLE': {en: 'Title', ru: 'Заголовок'},
+    'TITLE1': {en: 'Title 1', ru: 'Заголовок 1'},
+    'TITLE2': {en: 'Title 2', ru: 'Заголовок 2'},
     'CONTENT': {en: 'Content', ru: 'Содержание'},
     'SYSTEM': {en: 'System', ru: 'Система'},
     'PC': {en: 'PC', ru: 'ПК'},
@@ -44,58 +44,63 @@ function genid(nodeList) {
 }
 
 $(() => {
-	$('body').bind('contextmenu', ()=>{
+    // off contextmenu
+	$('body').bind('contextmenu', (event)=>{
 		return false
     })
     
+    //startup settings
     translate(supportLanguages[settings.currentLang])
     genid(document.querySelectorAll('#gen'))
 
-    $(".desktopFile").click((node)=>{
-        if (desktop.selected.indexOf(node.currentTarget.id) !== -1) return
-        console.log(node.currentTarget)
-        node.currentTarget.classList.add('desktopFileActive')
-        desktop.selected.push(node.currentTarget.id)
-    })
+    //clear all selected files
+    $(".desktop").click((event)=>{
+        if (!event.target.classList.contains('desktop')) return
 
-    $(".desktop").click((node)=>{
-        if (desktop.selected.length > 0) {
-            for (const node of desktop.selected) {
-                $(`#${node}`)[0].classList.remove('desktopFileActive')
-                desktop.selected.splice(desktop.selected.indexOf(node), 1)
-            }
+        for (const node of document.querySelectorAll('.desktopFile.desktopFileActive')) {
+            node.classList.remove('desktopFileActive')
         }
     })
 
-    $(".desktopFile[data-open-win]").dblclick((o)=>{
-        $(o.currentTarget.dataset.openWin).show()
+    //open windows
+    $(".desktopFile[data-open-win]").dblclick((event)=>{
+        $(event.currentTarget.dataset.openWin).show()
     })
 
-
+    //move desktop files
     $(".desktopFile").draggable({
         cursor: 'auto',
-        start: (node)=>{
-            node.target.style.backgroundColor = 'inherit'
+        delay: 100,
+        start: (event)=>{
+            event.target.style.backgroundColor = 'inherit'
         },
-        stop: (node)=>{
-            node.target.style.backgroundColor = ''
+        stop: (event)=>{
+            event.target.style.backgroundColor = ''
         }
     })
+    
+    //select desktop files
+    $(".desktopFile").click((event)=>{
+        $(".desktop").click()
+        if (event.currentTarget.classList.contains('desktopFileActive')) return
+        event.currentTarget.classList.add('desktopFileActive')
+    })
 
+    //move and resize window
     $(".window").draggable({
         cursor: 'move',
         snap: 'body, .taskbar, .window',
         cancel: ".windowTitleButtons",
         handle: ".windowTitleBar",
-        start: (node)=>{
-            const currentNode = node.currentTarget
-            if (!windows.maximize.hasOwnProperty(currentNode.id)) return
+        start: (event)=>{
+            const node = event.currentTarget
+            if (!windows.maximize.hasOwnProperty(node.id)) return
 
-            currentNode.style.width = windows.maximize[currentNode.id].width
-            currentNode.style.height = windows.maximize[currentNode.id].height
-            delete windows.maximize[currentNode.id]
+            node.style.width = windows.maximize[node.id].width
+            node.style.height = windows.maximize[node.id].height
+            delete windows.maximize[node.id]
         },
-        stop: ()=>{}
+        stop: (event)=>{}
     }).resizable({
         snap: 'body, .taskbar, .window',
 		handles: "all",
@@ -103,37 +108,47 @@ $(() => {
         minWidth: 200
     })
 
-    $("#change_lang").click(() => {
+    //change lang func
+    $("#change_lang").click(()=>{
         settings.currentLang++
         if (settings.currentLang == supportLanguages.length) settings.currentLang = 0
         translate(supportLanguages[settings.currentLang])
     })
     
-    $(".maximize").click((node) => {
-        const currentNode = node.currentTarget.parentElement.parentElement.offsetParent
-        if (windows.maximize.hasOwnProperty(currentNode.id)) {
-            currentNode.style.width = windows.maximize[currentNode.id].width
-            currentNode.style.height = windows.maximize[currentNode.id].height
-            currentNode.style.top = windows.maximize[currentNode.id].top
-            currentNode.style.left = windows.maximize[currentNode.id].left
-            delete windows.maximize[currentNode.id]
+    //maximize window button
+    $("svg[data-win-act='maximize']").click((event) => {
+        const node = event.currentTarget.parentElement.parentElement.offsetParent
+
+        //return past values
+        if (windows.maximize.hasOwnProperty(node.id)) {
+            node.style.width = windows.maximize[node.id].width
+            node.style.height = windows.maximize[node.id].height
+            node.style.top = windows.maximize[node.id].top
+            node.style.left = windows.maximize[node.id].left
+            node.style.borderRadius = ".5vh"
+            node.style.boxShadow = "0 0 1.6vh 0 rgba(0, 0, 0, 0.75)"
+            delete windows.maximize[node.id]
             return
         }
 
-        windows.maximize[currentNode.id] = {
-            width: currentNode.style.width, height: currentNode.style.height,
-            top: currentNode.style.top, left: currentNode.style.left
+        //save values
+        windows.maximize[node.id] = {
+            width: node.style.width, height: node.style.height,
+            top: node.style.top, left: node.style.left,
         }
 
-        $(currentNode).removeAttr("style")
-        currentNode.style.top = getComputedStyle(currentNode.firstElementChild).height
-        currentNode.style.left = '0rem'
-        currentNode.style.width = '100%'
-        currentNode.style.height = '100%'
+        $(node).removeAttr("style")
+        node.style.top = getComputedStyle(document.querySelector(".taskbar")).height
+        node.style.left = "0vw"
+        node.style.width = "99.8vw"
+        node.style.height = "96.5vh"
+        node.style.borderRadius = "0"
+        node.style.boxShadow = "none"
     })
 
-    $(".close").click((node) => {
-        const currentNode = node.currentTarget.parentElement.parentElement.offsetParent
-        currentNode.style.display = 'none'
+    //close window button
+    $("svg[data-win-act='close']").click((event) => {
+        const node = event.currentTarget.parentElement.parentElement.offsetParent
+        node.style.display = "none"
     })
 })
