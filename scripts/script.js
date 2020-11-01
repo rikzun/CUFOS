@@ -1,17 +1,25 @@
-const supportLanguages = ['en', 'ru']
-
 const settings = {
     currentLang: 0
 }
-
-const windows = {
-    maximize: {}
+const data = {
+    supportLanguages: ['en', 'ru'],
+    windows: {
+        maximize: {}
+    },
+    desktopMouse: {
+        start: {},
+        draggableWinIcon: false,
+        selection: false
+    }
 }
 
-// const desktopObjects = {
-//     files: {},
-//     vidgets: {}
+// const folders = {
+//     desktop: {
+//         'unnamed.txt': {ico: '', openApp: '', index: 1}
+//     }
 // }
+
+// const desktopIndices = {}
 
 const translateStrings = {
     'TITLE1': {en: 'Title 1', ru: 'Заголовок 1'},
@@ -22,9 +30,21 @@ const translateStrings = {
 	'CHANGE_LANG': {en: 'Change language', ru: 'Изменить язык'}
 }
 
-function selector(e) {
-    if (e.buttons != 1) return
-    // console.log(e.clientX, e.clientY)
+function calculateDesktopIndices() {
+    const sizes = {
+        desktopW: Number(getComputedStyle($('.desktop')[0]).width.replace('px', '')), 
+        desktopH: Number(getComputedStyle($('.desktop')[0]).height.replace('px', '')),
+        fileW: Number(getComputedStyle($('.desktopFile')[0]).width.replace('px', '')),
+        fileH: Number(getComputedStyle($('.desktopFile')[0]).height.replace('px', '')),
+        _distance: (window.innerWidth * 0.9375) / 100
+    }
+    console.log(
+        Math.floor(sizes.desktopW / (sizes.fileW + sizes._distance))
+        *
+        Math.floor(sizes.desktopH / (sizes.fileH + sizes._distance))
+    )
+    console.log(sizes.desktopW / (sizes.fileW + sizes._distance))
+    console.log(sizes.desktopH / (sizes.fileH + sizes._distance))
 }
 
 function translate(lang) {
@@ -43,6 +63,13 @@ function genid(nodeList) {
     console.log('all id generated')
 }
 
+function calculateRelativeUnits(px, direction) {
+    if (typeof px == 'number') px = String(px)
+    const directionSize = {'vh': window.innerHeight, 'vw': window.innerWidth}
+
+    return (px.replace('px', '') / directionSize[direction]) * 100 + direction
+}
+
 $(() => {
     // off contextmenu
 	$('body').bind('contextmenu', (event)=>{
@@ -50,8 +77,9 @@ $(() => {
     })
     
     //startup settings
-    translate(supportLanguages[settings.currentLang])
+    translate(data.supportLanguages[settings.currentLang])
     genid(document.querySelectorAll('#gen'))
+    calculateDesktopIndices()
 
     //clear all selected files
     $(".desktop").click((event)=>{
@@ -63,19 +91,22 @@ $(() => {
     })
 
     //open windows
-    $(".desktopFile[data-open-win]").dblclick((event)=>{
-        $(event.currentTarget.dataset.openWin).show()
+    $(".desktopFile[data-open-app]").dblclick((event)=>{
+        $(event.currentTarget.dataset.openApp).show()
     })
 
     //move desktop files
     $(".desktopFile").draggable({
         cursor: 'auto',
-        delay: 100,
         start: (event)=>{
             event.target.style.backgroundColor = 'inherit'
+            data.draggableWinIcon = true
         },
-        stop: (event)=>{
+        stop: (event, ui)=>{
+            event.target.style.top = calculateRelativeUnits(ui.position.top, 'vh')
+            event.target.style.left = calculateRelativeUnits(ui.position.left, 'vw')
             event.target.style.backgroundColor = ''
+            data.draggableWinIcon = false
         }
     })
     
@@ -94,11 +125,11 @@ $(() => {
         handle: ".windowTitleBar",
         start: (event)=>{
             const node = event.currentTarget
-            if (!windows.maximize.hasOwnProperty(node.id)) return
+            if (!data.windows.maximize.hasOwnProperty(node.id)) return
 
-            node.style.width = windows.maximize[node.id].width
-            node.style.height = windows.maximize[node.id].height
-            delete windows.maximize[node.id]
+            node.style.width = data.windows.maximize[node.id].width
+            node.style.height = data.windows.maximize[node.id].height
+            delete data.windows.maximize[node.id]
         },
         stop: (event)=>{}
     }).resizable({
@@ -111,8 +142,8 @@ $(() => {
     //change lang func
     $("#change_lang").click(()=>{
         settings.currentLang++
-        if (settings.currentLang == supportLanguages.length) settings.currentLang = 0
-        translate(supportLanguages[settings.currentLang])
+        if (settings.currentLang == data.supportLanguages.length) settings.currentLang = 0
+        translate(data.supportLanguages[settings.currentLang])
     })
     
     //maximize window button
@@ -120,25 +151,25 @@ $(() => {
         const node = event.currentTarget.parentElement.parentElement.offsetParent
 
         //return past values
-        if (windows.maximize.hasOwnProperty(node.id)) {
-            node.style.width = windows.maximize[node.id].width
-            node.style.height = windows.maximize[node.id].height
-            node.style.top = windows.maximize[node.id].top
-            node.style.left = windows.maximize[node.id].left
+        if (data.windows.maximize.hasOwnProperty(node.id)) {
+            node.style.width = data.windows.maximize[node.id].width
+            node.style.height = data.windows.maximize[node.id].height
+            node.style.top = data.windows.maximize[node.id].top
+            node.style.left = data.windows.maximize[node.id].left
             node.style.borderRadius = ".5vh"
             node.style.boxShadow = "0 0 1.6vh 0 rgba(0, 0, 0, 0.75)"
-            delete windows.maximize[node.id]
+            delete data.windows.maximize[node.id]
             return
         }
 
         //save values
-        windows.maximize[node.id] = {
+        data.windows.maximize[node.id] = {
             width: node.style.width, height: node.style.height,
             top: node.style.top, left: node.style.left,
         }
 
         $(node).removeAttr("style")
-        node.style.top = getComputedStyle(document.querySelector(".taskbar")).height
+        node.style.top = calculateRelativeUnits(getComputedStyle(document.querySelector(".taskbar")).height, 'vh')
         node.style.left = "0vw"
         node.style.width = "99.8vw"
         node.style.height = "96.5vh"
@@ -151,4 +182,34 @@ $(() => {
         const node = event.currentTarget.parentElement.parentElement.offsetParent
         node.style.display = "none"
     })
+
+    //desktop selection div
+    $('.desktop')
+    .mouseup(event => {
+        data.desktopMouse.start = {}
+        data.desktopMouse.selection = false
+        // $('.selectionBox').removeAttr('style')
+    })
+    .mousedown(event => {
+        data.desktopMouse.start = {x: event.offsetX, y: event.offsetY}
+        
+    })
+    .mousemove(event => {
+        if (event.buttons !== 1 || !(event.target.className !== 'desktop' || event.target.className !== 'selectionBox') || data.draggableWinIcon) return
+        if (Object.keys(data.desktopMouse.start).length == 0) return
+        const selectionBox = $('.selectionBox')[0]
+
+        console.log(data.desktopMouse.start)
+
+        if (!data.desktopMouse.selection) {
+            selectionBox.style.display = 'inline-flex'
+            selectionBox.style.top = data.desktopMouse.start.y + 'px'
+            selectionBox.style.left = data.desktopMouse.start.x + 'px'
+            data.desktopMouse.selection = true
+        }
+
+        selectionBox.style.height = event.offsetY - data.desktopMouse.start.y + 'px'
+        selectionBox.style.width = event.offsetX - data.desktopMouse.start.x + 'px'
+    })
+        
 })

@@ -80,19 +80,19 @@ p {
 /* desktop */
 .desktop {
     z-index: 1;
-    min-width: 97.1vw;
-    min-height: 91.3vh;
+    min-width: 98.1vw;
+    min-height: 93vh;
     margin-top: 3vh;
     position: fixed;
-    padding: 3vh;
+    padding: 2vh;
 }
 .desktopFile {
     z-index: 2;
     position: absolute;
     color: white;
     text-align: center;
-    width: 4.5vw;
-    height: 4.5vw;
+    width: 9.5036958817vh;
+    height: 9.5036958817vh;
     justify-content: center;
     border-radius: 1vh;
     display: grid;
@@ -153,4 +153,10 @@ p {
 .windowContent {
     padding-left: .5vw;
     font-size: 2vh;
+}
+.selectionBox {
+    display: none;
+    position: absolute;
+    background-color: #00bcd473;
+    border: 1px solid #00bcd473;
 }
