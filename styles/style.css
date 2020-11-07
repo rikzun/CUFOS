@@ -80,11 +80,9 @@ p {
 /* desktop */
 .desktop {
     z-index: 1;
-    min-width: 98.1vw;
-    min-height: 93vh;
-    margin-top: 3vh;
+    min-width: 100vw;
+    min-height: 100vh;
     position: fixed;
-    padding: 2vh;
 }
 .desktopFile {
     z-index: 2;
@@ -155,6 +153,7 @@ p {
     font-size: 2vh;
 }
 .selectionBox {
+    z-index: 3;
     display: none;
     position: absolute;
     background-color: #00bcd473;

@@ -16,7 +16,7 @@
 </head>
 <body>
     <!-- taskbar -->
-    <div class="taskbar">
+    <div class="taskbar" data-type="active">
         <div class="taskbarItems">
             <i class="taskbarElement fas fa-expand"></i>
             <div class="taskbarElement"><p data-default-string="SYSTEM"></p></div>
@@ -27,13 +27,13 @@
     <!-- taskbar end -->
 
     <!-- desktop -->
-    <div class="desktop">
+    <div class="desktop" data-type="active">
         <div class="selectionBox"></div>
-        <div class="desktopFile" id="gen" data-open-app="#win2" style="left: 7vw; top: 3vh">
+        <div class="desktopFile" id="gen" data-type="active" data-open-app="#win2" style="left: 40vw; top: 30vh">
             <i class="desktopFileIcon fas fa-file-alt"></i>
             <div class="desktopFileTitle">unnamed2.txt</div>
         </div>
-        <div class="desktopFile" id="gen" data-open-app="#win">
+        <div class="desktopFile" id="gen" data-type="active" data-open-app="#win" style="left: 60vw; top: 30vh">
             <i class="desktopFileIcon fas fa-file-alt"></i>
             <div class="desktopFileTitle">unnamed1.txt</div>
         </div>

@@ -1,6 +1,19 @@
-const settings = {
-    currentLang: 0
+requiredKeys = ['currentLang']
+missingKeys = []
+for (const key of requiredKeys) {
+    if (localStorage.hasOwnProperty(key)) continue
+    missingKeys.push(key)
 }
+
+for (const key of missingKeys) {
+    switch (key) {
+        case 'currentLang':
+            localStorage.setItem(key, '0')
+            break
+    }
+}
+
+
 const data = {
     supportLanguages: ['en', 'ru'],
     windows: {
@@ -72,18 +85,19 @@ function calculateRelativeUnits(px, direction) {
 
 $(() => {
     // off contextmenu
-	$('body').bind('contextmenu', (event)=>{
+	$('body').bind('contextmenu', event =>{
 		return false
     })
     
     //startup settings
-    translate(data.supportLanguages[settings.currentLang])
+    translate(data.supportLanguages[localStorage.getItem('currentLang')])
     genid(document.querySelectorAll('#gen'))
-    calculateDesktopIndices()
+    //calculateDesktopIndices()
 
     //clear all selected files
-    $(".desktop").click((event)=>{
-        if (!event.target.classList.contains('desktop')) return
+    $("*[data-type='active']").click(event => {
+        // console.log(event)
+        if (!event.target.dataset.type) return
 
         for (const node of document.querySelectorAll('.desktopFile.desktopFileActive')) {
             node.classList.remove('desktopFileActive')
@@ -91,18 +105,18 @@ $(() => {
     })
 
     //open windows
-    $(".desktopFile[data-open-app]").dblclick((event)=>{
+    $(".desktopFile[data-open-app]").dblclick(event => {
         $(event.currentTarget.dataset.openApp).show()
     })
 
     //move desktop files
     $(".desktopFile").draggable({
         cursor: 'auto',
-        start: (event)=>{
+        start: event => {
             event.target.style.backgroundColor = 'inherit'
             data.draggableWinIcon = true
         },
-        stop: (event, ui)=>{
+        stop: (event, ui) => {
             event.target.style.top = calculateRelativeUnits(ui.position.top, 'vh')
             event.target.style.left = calculateRelativeUnits(ui.position.left, 'vw')
             event.target.style.backgroundColor = ''
@@ -111,7 +125,7 @@ $(() => {
     })
     
     //select desktop files
-    $(".desktopFile").click((event)=>{
+    $(".desktopFile").click(event => {
         $(".desktop").click()
         if (event.currentTarget.classList.contains('desktopFileActive')) return
         event.currentTarget.classList.add('desktopFileActive')
@@ -120,10 +134,9 @@ $(() => {
     //move and resize window
     $(".window").draggable({
         cursor: 'move',
-        snap: 'body, .taskbar, .window',
         cancel: ".windowTitleButtons",
         handle: ".windowTitleBar",
-        start: (event)=>{
+        start: event => {
             const node = event.currentTarget
             if (!data.windows.maximize.hasOwnProperty(node.id)) return
 
@@ -131,23 +144,23 @@ $(() => {
             node.style.height = data.windows.maximize[node.id].height
             delete data.windows.maximize[node.id]
         },
-        stop: (event)=>{}
+        stop: event => {}
     }).resizable({
-        snap: 'body, .taskbar, .window',
 		handles: "all",
         minHeight: 150,
         minWidth: 200
     })
 
     //change lang func
-    $("#change_lang").click(()=>{
-        settings.currentLang++
-        if (settings.currentLang == data.supportLanguages.length) settings.currentLang = 0
-        translate(data.supportLanguages[settings.currentLang])
+    $("#change_lang").click(() => {
+        let index = Number(localStorage.getItem('currentLang')) + 1
+        if (index == data.supportLanguages.length) index = 0
+        localStorage.setItem('currentLang', index)
+        translate(data.supportLanguages[index])
     })
     
     //maximize window button
-    $("svg[data-win-act='maximize']").click((event) => {
+    $("svg[data-win-act='maximize']").click(event => {
         const node = event.currentTarget.parentElement.parentElement.offsetParent
 
         //return past values
@@ -178,38 +191,38 @@ $(() => {
     })
 
     //close window button
-    $("svg[data-win-act='close']").click((event) => {
+    $("svg[data-win-act='close']").click(event => {
         const node = event.currentTarget.parentElement.parentElement.offsetParent
         node.style.display = "none"
     })
 
     //desktop selection div
-    $('.desktop')
+    $('body')
     .mouseup(event => {
         data.desktopMouse.start = {}
         data.desktopMouse.selection = false
-        // $('.selectionBox').removeAttr('style')
+        $('.selectionBox').removeAttr('style')
     })
     .mousedown(event => {
-        data.desktopMouse.start = {x: event.offsetX, y: event.offsetY}
+        if (event.target.className !== 'desktop') return
+        data.desktopMouse.start = {x: event.pageX, y: event.pageY}
         
     })
     .mousemove(event => {
-        if (event.buttons !== 1 || !(event.target.className !== 'desktop' || event.target.className !== 'selectionBox') || data.draggableWinIcon) return
+        console.log(event.target.className)
+        if (event.buttons !== 1 || data.draggableWinIcon) return
         if (Object.keys(data.desktopMouse.start).length == 0) return
         const selectionBox = $('.selectionBox')[0]
 
-        console.log(data.desktopMouse.start)
-
         if (!data.desktopMouse.selection) {
-            selectionBox.style.display = 'inline-flex'
+            selectionBox.style.display = 'block'
             selectionBox.style.top = data.desktopMouse.start.y + 'px'
             selectionBox.style.left = data.desktopMouse.start.x + 'px'
             data.desktopMouse.selection = true
         }
 
-        selectionBox.style.height = event.offsetY - data.desktopMouse.start.y + 'px'
-        selectionBox.style.width = event.offsetX - data.desktopMouse.start.x + 'px'
+        selectionBox.style.height = event.pageY - data.desktopMouse.start.y + 'px'
+        selectionBox.style.width = event.pageX - data.desktopMouse.start.x + 'px'
     })
         
 })
