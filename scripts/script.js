@@ -1,16 +1,10 @@
-requiredKeys = ['currentLang']
-missingKeys = []
-for (const key of requiredKeys) {
-    if (localStorage.hasOwnProperty(key)) continue
-    missingKeys.push(key)
+const standardSettings = {
+    currentLang: '0'
 }
 
-for (const key of missingKeys) {
-    switch (key) {
-        case 'currentLang':
-            localStorage.setItem(key, '0')
-            break
-    }
+for (const [key, value] in Object.entries(standardSettings)) {
+    if (localStorage.hasOwnProperty(key)) continue
+    localStorage.setItem(key, value)
 }
 
 
@@ -22,7 +16,6 @@ const data = {
     desktopMouse: {
         start: {},
         draggableWinIcon: false,
-        selection: false
     }
 }
 
@@ -46,18 +39,15 @@ const translateStrings = {
 function calculateDesktopIndices() {
     const sizes = {
         desktopW: Number(getComputedStyle($('.desktop')[0]).width.replace('px', '')), 
-        desktopH: Number(getComputedStyle($('.desktop')[0]).height.replace('px', '')),
+        desktopH:
+            Number(getComputedStyle($('.desktop')[0]).height.replace('px', '')) 
+            - 
+            Number(getComputedStyle($('.taskbar')[0]).height.replace('px', '')),
         fileW: Number(getComputedStyle($('.desktopFile')[0]).width.replace('px', '')),
         fileH: Number(getComputedStyle($('.desktopFile')[0]).height.replace('px', '')),
         _distance: (window.innerWidth * 0.9375) / 100
     }
-    console.log(
-        Math.floor(sizes.desktopW / (sizes.fileW + sizes._distance))
-        *
-        Math.floor(sizes.desktopH / (sizes.fileH + sizes._distance))
-    )
-    console.log(sizes.desktopW / (sizes.fileW + sizes._distance))
-    console.log(sizes.desktopH / (sizes.fileH + sizes._distance))
+    console.log(sizes.desktopW / (sizes.fileW + 10))
 }
 
 function translate(lang) {
@@ -92,7 +82,7 @@ $(() => {
     //startup settings
     translate(data.supportLanguages[localStorage.getItem('currentLang')])
     genid(document.querySelectorAll('#gen'))
-    //calculateDesktopIndices()
+    calculateDesktopIndices()
 
     //clear all selected files
     $("*[data-type='active']").click(event => {
@@ -200,29 +190,35 @@ $(() => {
     $('body')
     .mouseup(event => {
         data.desktopMouse.start = {}
-        data.desktopMouse.selection = false
         $('.selectionBox').removeAttr('style')
     })
     .mousedown(event => {
         if (event.target.className !== 'desktop') return
         data.desktopMouse.start = {x: event.pageX, y: event.pageY}
-        
     })
     .mousemove(event => {
-        console.log(event.target.className)
-        if (event.buttons !== 1 || data.draggableWinIcon) return
-        if (Object.keys(data.desktopMouse.start).length == 0) return
+        
+        if (event.buttons !== 1 || data.draggableWinIcon || Object.keys(data.desktopMouse.start).length == 0) return
         const selectionBox = $('.selectionBox')[0]
+        selectionBox.style.display = 'block'
+        selectionBox.style.top = data.desktopMouse.start.y + 'px'
+        selectionBox.style.left = data.desktopMouse.start.x + 'px'
 
-        if (!data.desktopMouse.selection) {
-            selectionBox.style.display = 'block'
-            selectionBox.style.top = data.desktopMouse.start.y + 'px'
-            selectionBox.style.left = data.desktopMouse.start.x + 'px'
-            data.desktopMouse.selection = true
+        let height = event.pageY - data.desktopMouse.start.y
+        let width = event.pageX - data.desktopMouse.start.x
+
+        if (height == 0 || width == 0) selectionBox.style.display = 'none'
+        if (height < 0) {
+            height = Math.abs(height)
+            selectionBox.style.top = data.desktopMouse.start.y - height + 'px'
+        }
+        if (width < 0) {
+            width = Math.abs(width)
+            selectionBox.style.left = data.desktopMouse.start.x - width + 'px'
         }
 
-        selectionBox.style.height = event.pageY - data.desktopMouse.start.y + 'px'
-        selectionBox.style.width = event.pageX - data.desktopMouse.start.x + 'px'
+        selectionBox.style.height = height + 'px'
+        selectionBox.style.width = width + 'px'
     })
         
 })
