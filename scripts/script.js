@@ -1,15 +1,13 @@
 const standardSettings = {
-    currentLang: '0'
+    currentLang: 'en'
 }
 
-for (const [key, value] in Object.entries(standardSettings)) {
-    if (localStorage.hasOwnProperty(key)) continue
+for (const [key, value] of Object.entries(standardSettings)) {
+    if (localStorage.hasOwnProperty(key) && localStorage[key] === value) continue
     localStorage.setItem(key, value)
 }
 
-
 const data = {
-    supportLanguages: ['en', 'ru'],
     windows: {
         maximize: {}
     },
@@ -33,7 +31,14 @@ const translateStrings = {
     'CONTENT': {en: 'Content', ru: 'Содержание'},
     'SYSTEM': {en: 'System', ru: 'Система'},
     'PC': {en: 'PC', ru: 'ПК'},
-	'CHANGE_LANG': {en: 'Change language', ru: 'Изменить язык'}
+    'CHANGE_LANG': {en: 'Change language', ru: 'Изменить язык'},
+    'WEEKDAY1': {en: 'Mon', ru: 'Пн'},
+    'WEEKDAY2': {en: 'Tue', ru: 'Вт'},
+    'WEEKDAY3': {en: 'Wed', ru: 'Ср'},
+    'WEEKDAY4': {en: 'Thu', ru: 'Чт'},
+    'WEEKDAY5': {en: 'Fri', ru: 'Пт'},
+    'WEEKDAY6': {en: 'Sat', ru: 'Сб'},
+    'WEEKDAY0': {en: 'Sun', ru: 'Вс'}
 }
 
 function calculateDesktopIndices() {
@@ -73,6 +78,31 @@ function calculateRelativeUnits(px, direction) {
     return (px.replace('px', '') / directionSize[direction]) * 100 + direction
 }
 
+function strftime(date, format) {
+    if (date < 0) date = 0
+
+    const matches = format.match(/%(d|m|y|H|M|S)/g)
+    const dtfunc = {
+        'd': new Date(date).getUTCDate(),
+        'm': new Date(date).getUTCMonth() + 1,
+        'y': new Date(date).getUTCFullYear(),
+        'H': new Date(date).getUTCHours(),
+        'M': new Date(date).getUTCMinutes(),
+        'S': new Date(date).getUTCSeconds(),
+    }
+
+    matches.forEach(e => {
+        let value = dtfunc[e.replace('%', '')]
+        if (value < 10) {
+          value = `0${value}`
+        }
+  
+        format = format.replace(e, value)
+    })
+
+    return format
+}
+
 $(() => {
     // off contextmenu
 	$('body').bind('contextmenu', event =>{
@@ -80,7 +110,7 @@ $(() => {
     })
     
     //startup settings
-    translate(data.supportLanguages[localStorage.getItem('currentLang')])
+    translate(localStorage.getItem('currentLang'))
     genid(document.querySelectorAll('#gen'))
     calculateDesktopIndices()
 
@@ -143,10 +173,17 @@ $(() => {
 
     //change lang func
     $("#change_lang").click(() => {
-        let index = Number(localStorage.getItem('currentLang')) + 1
-        if (index == data.supportLanguages.length) index = 0
-        localStorage.setItem('currentLang', index)
-        translate(data.supportLanguages[index])
+        switch (localStorage.getItem('currentLang')) {
+            case 'en':
+                localStorage.setItem('currentLang', 'ru')
+                translate('ru')
+                break;
+
+            case 'ru':
+                localStorage.setItem('currentLang', 'en')
+                translate('en')
+                break;
+        }
     })
     
     //maximize window button
@@ -220,5 +257,10 @@ $(() => {
         selectionBox.style.height = height + 'px'
         selectionBox.style.width = width + 'px'
     })
-        
+
+    setInterval(()=>{
+        const date = new Date()
+        $('#taskbarClock')[0].textContent = 
+        translateStrings[`WEEKDAY${date.getDay()}`][localStorage.getItem('currentLang')] + ' ' + strftime(date, '%H:%M:%S')
+    }, 1000)
 })
