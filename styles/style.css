@@ -79,8 +79,8 @@ p {
     margin-left: auto;
 }
 #taskbarClock {
-    width: 5vw;
-    text-align: center;
+    width: 6vw;
+    justify-content: center;
 }
 .taskbarElement {
     display: inline-flex !important;

@@ -1,12 +1,3 @@
-const standardSettings = {
-    currentLang: 'en'
-}
-
-for (const [key, value] of Object.entries(standardSettings)) {
-    if (localStorage.hasOwnProperty(key) && localStorage[key] === value) continue
-    localStorage.setItem(key, value)
-}
-
 const data = {
     windows: {
         maximize: {}
@@ -16,14 +7,6 @@ const data = {
         draggableWinIcon: false,
     }
 }
-
-// const folders = {
-//     desktop: {
-//         'unnamed.txt': {ico: '', openApp: '', index: 1}
-//     }
-// }
-
-// const desktopIndices = {}
 
 const translateStrings = {
     'TITLE1': {en: 'Title 1', ru: 'Заголовок 1'},
@@ -40,6 +23,17 @@ const translateStrings = {
     'WEEKDAY6': {en: 'Sat', ru: 'Сб'},
     'WEEKDAY0': {en: 'Sun', ru: 'Вс'}
 }
+function translate(key) {
+    return translateStrings[key][localStorage.getItem('currentLang')]
+}
+
+function changeLang(lang) {
+    for (const node of document.querySelectorAll('p[data-default-string]')) {
+        const translated = node.dataset.defaultString
+        if (!translateStrings.hasOwnProperty(translated)) {node.textContent = translated; continue}
+        node.textContent = translateStrings[translated][lang]
+    }
+}
 
 function calculateDesktopIndices() {
     const sizes = {
@@ -55,54 +49,6 @@ function calculateDesktopIndices() {
     console.log(sizes.desktopW / (sizes.fileW + 10))
 }
 
-function translate(lang) {
-    for (const node of document.querySelectorAll('p[data-default-string]')) {
-        const translated = node.dataset.defaultString
-        if (!translateStrings.hasOwnProperty(translated)) {node.textContent = translated; continue}
-        node.textContent = translateStrings[translated][lang]
-    }
-    console.log(`language changed to ${lang}`)
-}
-
-function genid(nodeList) {
-    for (const node of nodeList) {
-        node.id = '_' + Math.random().toString(36).substr(2, 9);
-    }
-    console.log('all id generated')
-}
-
-function calculateRelativeUnits(px, direction) {
-    if (typeof px == 'number') px = String(px)
-    const directionSize = {'vh': window.innerHeight, 'vw': window.innerWidth}
-
-    return (px.replace('px', '') / directionSize[direction]) * 100 + direction
-}
-
-function strftime(date, format) {
-    if (date < 0) date = 0
-
-    const matches = format.match(/%(d|m|y|H|M|S)/g)
-    const dtfunc = {
-        'd': new Date(date).getUTCDate(),
-        'm': new Date(date).getUTCMonth() + 1,
-        'y': new Date(date).getUTCFullYear(),
-        'H': new Date(date).getUTCHours(),
-        'M': new Date(date).getUTCMinutes(),
-        'S': new Date(date).getUTCSeconds(),
-    }
-
-    matches.forEach(e => {
-        let value = dtfunc[e.replace('%', '')]
-        if (value < 10) {
-          value = `0${value}`
-        }
-  
-        format = format.replace(e, value)
-    })
-
-    return format
-}
-
 $(() => {
     // off contextmenu
 	$('body').bind('contextmenu', event =>{
@@ -110,13 +56,12 @@ $(() => {
     })
     
     //startup settings
-    translate(localStorage.getItem('currentLang'))
+    changeLang(localStorage.getItem('currentLang'))
     genid(document.querySelectorAll('#gen'))
     calculateDesktopIndices()
 
     //clear all selected files
     $("*[data-type='active']").click(event => {
-        // console.log(event)
         if (!event.target.dataset.type) return
 
         for (const node of document.querySelectorAll('.desktopFile.desktopFileActive')) {
@@ -176,12 +121,12 @@ $(() => {
         switch (localStorage.getItem('currentLang')) {
             case 'en':
                 localStorage.setItem('currentLang', 'ru')
-                translate('ru')
+                changeLang('ru')
                 break;
 
             case 'ru':
                 localStorage.setItem('currentLang', 'en')
-                translate('en')
+                changeLang('en')
                 break;
         }
     })
@@ -260,7 +205,9 @@ $(() => {
 
     setInterval(()=>{
         const date = new Date()
-        $('#taskbarClock')[0].textContent = 
-        translateStrings[`WEEKDAY${date.getDay()}`][localStorage.getItem('currentLang')] + ' ' + strftime(date, '%H:%M:%S')
+        const taskbarClockDay = $('#taskbarClockDay')[0]
+        $('#taskbarClockTime')[0].textContent = strftime(date, '%H:%M:%S')
+        if (taskbarClockDay.textContent == translate(`WEEKDAY${date.getDay()}`)) return
+        taskbarClockDay.textContent = translate(`WEEKDAY${date.getDay()}`)
     }, 1000)
 })

@@ -4,6 +4,8 @@
     <script src="./scripts/vendors/jquery-ui.js"></script>
     <script src="./scripts/vendors/jquery.ui.resizable.snap.ext.js"></script>
     <script src="./scripts/vendors/font-awesome.js"></script>
+    <script src="./scripts/utils.js"></script>
+    <script src="./scripts/standardSettings.js"></script>
     <script src="./scripts/script.js"></script>
     <link rel="stylesheet" href="./styles/vendors/jquery-ui.css">
     <link rel="stylesheet" href="./styles/style.css">
@@ -24,7 +26,9 @@
 			<div id="change_lang" class="taskbarElement"><p data-default-string="CHANGE_LANG"></p></div>
         </div>
         <div class="taskbarItemsLeft">
-            <div class="taskbarElement"><p id="taskbarClock"></p></div>
+            <div class="taskbarElement" id="taskbarClock">
+                <p id="taskbarClockDay" style="padding-right: .1vw"></p><p id="taskbarClockTime"></p>
+            </div>
         </div>
     </div>
     <!-- taskbar end -->
