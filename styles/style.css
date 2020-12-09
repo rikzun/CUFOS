@@ -79,8 +79,8 @@ p {
     margin-left: auto;
 }
 #taskbarClock {
-    width: 6vw;
-    justify-content: center;
+  /*width: 5vw; */
+    text-align: center;
 }
 .taskbarElement {
     display: inline-flex !important;
@@ -171,4 +171,26 @@ p {
     position: absolute;
     background-color: #00bcd473;
     border: 1px solid #00bcd473;
+}
+
+
+
+
+.apple-svg {
+    width: 12px;
+}
+.menu-svg {
+    width: 12px;
+}
+.apple-svg:hover {
+    background-color: lightseagreen;
+}
+.menu-svg:hover {
+    background-color: lightseagreen;
+}
+.font-svg {
+    font-family: sans-serif;
+}
+.margin-svg {
+    margin: .0vw .5vw .0vw .5vw;
 }
