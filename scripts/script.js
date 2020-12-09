@@ -30,6 +30,7 @@ const translateStrings = {
     'TITLE2': {en: 'Title 2', ru: 'Заголовок 2'},
     'CONTENT': {en: 'Content', ru: 'Содержание'},
     'SYSTEM': {en: 'System', ru: 'Система'},
+    'FILES': {en: 'Files', ru: 'Файл'},
     'PC': {en: 'PC', ru: 'ПК'},
     'CHANGE_LANG': {en: 'ENG', ru: 'РУС'},
     'WEEKDAY1': {en: 'Mon', ru: 'Пн'},

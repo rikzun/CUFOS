@@ -79,7 +79,7 @@ p {
     margin-left: auto;
 }
 #taskbarClock {
-  /*width: 5vw; */
+ /* width: 5vw; */
     text-align: center;
 }
 .taskbarElement {
@@ -192,5 +192,12 @@ p {
     font-family: sans-serif;
 }
 .margin-svg {
+    margin: .0vw .5vw .0vw .5vw;
+}
+.taskbar-block {
+    height: 2.4vh;
+} 
+.style-string {
+    font-family: sans-serif;
     margin: .0vw .5vw .0vw .5vw;
 }
