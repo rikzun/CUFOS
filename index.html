@@ -8,77 +8,81 @@
     <link rel="stylesheet" href="./webfonts/free.min.css">
     <meta charset="utf-8">
     <title>CUFOS</title>
-    <meta name="author" content="RikZun">
     <meta name="description" content="Concept of a User-Friendly Operating System">
 </head>
 <body>
-    <!-- taskbar -->
-    <header class="taskbar" data-type="active">
-        <div class="taskbarItems">
-            <svg class="apple-svg margin-svg" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="apple" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" class="svg-inline--fa fa-apple fa-w-12 fa-lg"><path fill="currentColor" d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" class=""></path></svg>
-            <!--<i class="taskbarElement fas fa-expand"></i>
-            <div class="taskbarElement"><p data-default-string="SYSTEM"></p></div>
-            <div class="taskbarElement"><p data-default-string="PC"></p></div>-->
-            <div class="taskbarElement style-string"><p data-default-string="FILES"></p></div>
+    <div class="display">
+
+        <!-- upper taskbar -->
+        <div class="taskbar">
+            <div class="taskbarItems">
+                <i class="taskbarElement fas fa-expand"></i>
+                <div class="taskbarElement"><p data-default-string="FILE"></p></div>
+            </div>
+            <div class="taskbarItemsLeft">
+                <div class="taskbarElement"><p id="taskbarClock"></p></div>
+            </div>
         </div>
-        <div class="taskbarItemsLeft">
-            <div class="taskbarElement"><p id="taskbarClock" class="font-svg margin-svg"></p></div>
-            <div id="change_lang" class="taskbarElement font-svg margin-svg"><p data-default-string="CHANGE_LANG"></p></div>
-            <svg class="menu-svg margin-svg" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="bars" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-bars fa-w-14 fa-5x"><path fill="currentColor" d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z" class=""></path></svg>
+        <!-- upper taskbar end -->
+
+        <!-- desktop -->
+        <div class="desktop">
+            <div class="selectionBox"></div>
+            <div class="desktopFile" id="gen" data-open-app="#OSSettings" style="left: 40vw; top: 30vh">
+                <i class="desktopFileIcon fas fa-hammer"></i>
+                <div class="desktopFileTitle">
+                    <p data-default-string="SETTINGS"></p>
+                </div>
+            </div>
+            <div class="desktopFile" id="gen" data-open-app="#defaultWin" style="left: 60vw; top: 30vh">
+                <i class="desktopFileIcon fas fa-file-alt"></i>
+                <div class="desktopFileTitle">unnamed1.txt</div>
+            </div>
         </div>
-    </header>
-    <div class="taskbar-block"></div>
-    <!-- taskbar end -->
-    <!-- desktop -->
-    <main class="desktop" data-type="active">
-        <div class="selectionBox"></div>
-        <div class="desktopFile" id="gen" data-type="active" data-open-app="#win2" style="left: 40vw; top: 30vh">
-            <i class="desktopFileIcon fas fa-file-alt"></i>
-            <div class="desktopFileTitle">unnamed2.txt</div>
+        <!-- desktop end -->
+
+        <!-- lower taskbar -->
+        <div class="taskbar lowerTaskbar">
+            <i class="fas fa-expand"></i>
         </div>
-        <div class="desktopFile" id="gen" data-type="active" data-open-app="#win" style="left: 60vw; top: 30vh">
-            <i class="desktopFileIcon fas fa-file-alt"></i>
-            <div class="desktopFileTitle">unnamed1.txt</div>
-        </div>
-    </main>
-    <!-- desktop end -->
+        <!-- lower taskbar end -->
+
+    </div>
+    
     <!-- hidden windows -->
-    <div class="window" id="win" style="display: none; width: 30vw; height: 25vh; left: 50vw; top: 25vh">
+    <div class="window" id="defaultWin" style="width: 30vw; height: 25vh; left: 50vw; top: 25vh">
         <div class="windowTitleBar">
             <div class="windowTitle"><p data-default-string="TITLE1"></p></div>
             <div class="windowTitleButtons">
-                <svg class="windowButton" data-win-act="minimize" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-                    <path id="Контур_48" data-name="Контур 48" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#2acb42"/>
-                </svg>                      
-                <svg class="windowButton" data-win-act="maximize" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-                    <path id="Контур_47" data-name="Контур 47" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#ffc12f"/>
-                </svg>
-                <svg class="windowButton" data-win-act="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-                    <path id="Контур_46" data-name="Контур 46" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#ff6157"/>
-                </svg>
+                <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
+                <div class="windowButton buttonMaximize" data-win-act="maximize"></div>
+                <div class="windowButton buttonClose" data-win-act="close"></div>
             </div>
         </div>
         <div class="windowContent">
 			<p data-default-string="CONTENT"></p>
 		</div>
     </div>
-    <div class="window" id="win2" style="display: none; width: 30vw; height: 25vh; left: 42vw; top: 40vh">
+
+    <div class="window" id="OSSettings" style="width: 30vw; height: 25vh; left: 42vw; top: 40vh">
         <div class="windowTitleBar">
-            <div class="windowTitle"><p data-default-string="TITLE2"></p></div>
+            <div class="windowTitle"><p data-default-string="SETTINGS"></p></div>
             <div class="windowTitleButtons">
-                <svg class="windowButton" data-win-act="minimize" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-                    <path id="Контур_48" data-name="Контур 48" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#2acb42"/>
-                </svg>                      
-                <svg class="windowButton" data-win-act="maximize" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-                    <path id="Контур_47" data-name="Контур 47" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#ffc12f"/>
-                </svg>
-                <svg class="windowButton" data-win-act="close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12">
-                    <path id="Контур_46" data-name="Контур 46" d="M29.5-182a6,6,0,0,0,6-6,6,6,0,0,0-6-6,6,6,0,0,0-6,6A6,6,0,0,0,29.5-182Z" transform="translate(-23.5 194)" fill="#ff6157"/>
-                </svg>
+                <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
+                <div class="windowButton buttonMaximize" data-win-act="maximize"></div>
+                <div class="windowButton buttonClose" data-win-act="close"></div>
             </div>
         </div>
         <div class="windowContent">
-			<p data-default-string="CONTENT"></p>
+            <div style="display: flex;">
+                <p data-default-string="CHANGE_LANG"></p> - <div id="change_lang">CLICK</div>
+            </div>
+            <div style="display: flex;">
+                <p data-default-string="CHANGE_CLICK_SINGLE"></p> - <div id="change_click_single">CLICK</div>
+            </div>
+            <div style="display: flex;">
+                <p data-default-string="CHANGE_CLICK_DOUBLE"></p> - <div id="change_click_double">CLICK</div>
+            </div>
 		</div>
     </div>
     <!-- hidden windows end -->
@@ -86,5 +90,8 @@
 <script src="./scripts/vendors/jquery-3.5.1.js"></script>
 <script src="./scripts/vendors/jquery-ui.js"></script>
 <script src="./scripts/vendors/jquery.ui.resizable.snap.ext.js"></script>
+<script src="./scripts/lang.js"></script>
+<script src="./scripts/utils.js"></script>
+<script src="./scripts/defaultSettings.js"></script>
 <script src="./scripts/script.js"></script>
 </html>

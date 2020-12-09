@@ -1,8 +1,9 @@
 const standardSettings = {
-    currentLang: 'en'
+    currentLang: 'en',
+    openClick: 'double'
 }
 
 for (const [key, value] of Object.entries(standardSettings)) {
-    if (localStorage.hasOwnProperty(key) && localStorage[key] === value) continue
+    if (localStorage.hasOwnProperty(key)) continue
     localStorage.setItem(key, value)
 }

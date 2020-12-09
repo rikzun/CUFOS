@@ -55,12 +55,24 @@ body {
 p {
     margin: 0;
 }
-/* taskbar */
+.display {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+.selectionBox {
+    z-index: 3;
+    display: none;
+    position: fixed;
+    background-color: #00bcd473;
+    border: 1px solid #00bcd473;
+}
+/* upper taskbar */
 .taskbar {
     background-color: rgba(0, 0, 0, 0.836);
     display: inline-flex;
     color: white;
-    position: absolute;
+    position: relative;
     width: 100vw;
     height: 2.4vh;
     font-size: 1.8vh;
@@ -78,10 +90,6 @@ p {
     display: inline-flex;
     margin-left: auto;
 }
-#taskbarClock {
- /* width: 5vw; */
-    text-align: center;
-}
 .taskbarElement {
     display: inline-flex !important;
     align-items: center;
@@ -90,23 +98,40 @@ p {
 .taskbarElement:hover {
     background-color: lightseagreen;
 }
+#taskbarClock {
+    min-width: 5vw;
+    text-align: center;
+}
+/* lower taskbar */
+.lowerTaskbar {
+    height: 3.6vh;
+    justify-content: center;
+    align-items: center;
+}
 /* desktop */
 .desktop {
     z-index: 1;
-    min-width: 100vw;
-    min-height: 100vh;
-    position: fixed;
+    width: 100vw;
+    height: -webkit-fill-available;
+    position: relative;
 }
 .desktopFile {
     z-index: 2;
     position: absolute;
     color: white;
     text-align: center;
-    width: 9.3vh;
-    height: 9.3vh;
-    justify-content: center;
     border-radius: 1vh;
-    display: grid;
+    display: flex;
+    flex-flow: column;
+    height: 8vh;
+    width: 8vh;
+}
+.desktopFileIcon {
+    font-size: 5vh;
+    padding-top: .5vh;
+}
+.desktopFileTitle {
+    font-size: 1.5vh;
 }
 .desktopFile:hover {
     background-color: #9fd3ff29;
@@ -114,21 +139,11 @@ p {
 .desktopFileActive {
     background-color: #9fd2ff6b !important;
 }
-.desktopFileIcon {
-    font-size: 5.5vh;
-    display: inline-table;
-    align-items: center;
-    padding-top: .6vh;
-}
-.desktopFileTitle {
-    font-size: 1.5vh;
-}
-/* desktop end */
-/* windows */
+/* window */
 .window {
     z-index: 2;
     position: fixed;
-    display: block;
+    display: none;
     color: white;
     background-color: #2D2D2D;
     box-shadow: 0 0 1.6vh 0 rgba(0, 0, 0, 0.75);
@@ -157,26 +172,32 @@ p {
     margin-right: .5vw;
 }
 .windowButton {
-    height: 1.4vh;
-    display: flex;
-    padding-left: .4vw;
+    height: .8vw;
+    width: .8vw;
+    margin-left: .2vw;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.buttonClose {
+    background-image: url('../images/close.svg');
+}
+.buttonMaximize {
+    background-image: url('../images/maximize.svg');
+}
+.buttonMinimize {
+    background-image: url('../images/minimize.svg');
 }
 .windowContent {
     padding-left: .5vw;
     font-size: 2vh;
 }
-.selectionBox {
-    z-index: 3;
-    display: none;
-    position: absolute;
-    background-color: #00bcd473;
-    border: 1px solid #00bcd473;
-}
 
 
 
 
-.apple-svg {
+
+
+/* .apple-svg {
     width: 12px;
 }
 .menu-svg {
@@ -200,4 +221,4 @@ p {
 .style-string {
     font-family: sans-serif;
     margin: .0vw .5vw .0vw .5vw;
-}
+} */

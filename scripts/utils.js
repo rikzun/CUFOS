@@ -5,6 +5,10 @@ function calculateRelativeUnits(px, direction) {
     return (px.replace('px', '') / directionSize[direction]) * 100 + direction
 }
 
+function translate(key) {
+    return translateStrings[key][localStorage.getItem('currentLang')]
+}
+
 function strftime(date, format) {
     if (date < 0) date = 0
 
@@ -30,8 +34,6 @@ function strftime(date, format) {
     return format
 }
 
-function genid(nodeList) {
-    for (const node of nodeList) {
-        node.id = '_' + Math.random().toString(36).substr(2, 9);
-    }
+function wait(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms))
 }
