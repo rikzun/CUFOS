@@ -1,9 +1,8 @@
 const data = {
-    windows: {
-        maximize: {}
-    },
     mouse: {
         start: {},
+    },
+    switches: {
         draggableWinIcon: false,
         selectedFile: false
     }
@@ -62,7 +61,7 @@ $(() => {
 //---------------
     //clear selection
     $("body").click(event => {
-        if (data.mouse.selectedFile) return
+        if (data.switches.selectedFile) return
         for (const node of document.querySelectorAll('.desktopFile.desktopFileActive')) {
             node.classList.remove('desktopFileActive')
         }
@@ -76,9 +75,7 @@ $(() => {
             selectFile(event.currentTarget)
         }
     })
-
-    //open or selected file
-    $(".desktopFile").click(event => {
+    .click(event => {
         if (localStorage.openClick == 'single') {
             $(event.currentTarget.dataset.openApp).show()
         } else {
@@ -88,11 +85,11 @@ $(() => {
 
     async function selectFile(node) {
         $('body').click()
-        data.mouse.selectedFile = true
+        data.switches.selectedFile = true
         node.classList.add('desktopFileActive')
     
         await wait(50)
-        data.mouse.selectedFile = false
+        data.switches.selectedFile = false
     }
 
     //move desktop files
@@ -100,21 +97,31 @@ $(() => {
         cursor: 'default',
         start: event => {
             event.target.style.backgroundColor = 'inherit'
-            data.draggableWinIcon = true
+            data.switches.draggableWinIcon = true
         },
         stop: (event, ui) => {
             event.target.style.top = calculateRelativeUnits(ui.position.top, 'vh')
             event.target.style.left = calculateRelativeUnits(ui.position.left, 'vw')
-            data.draggableWinIcon = false
+            data.switches.draggableWinIcon = false
         }
     })
 
     //change cursor style 
     $(".desktopFile").hover(event => {
-        if (localStorage.openClick == 'single') {
-            event.currentTarget.style.cursor = 'pointer'
-        } else {
-            event.currentTarget.style.cursor = 'default'
+        switch (event.handleObj.origType) {
+            case "mouseenter":
+                if (localStorage.openClick == 'single') {
+                    $('body').click()
+                    event.currentTarget.style.cursor = 'pointer'
+                    event.currentTarget.classList.add('desktopFileActive')
+                } else {
+                    event.currentTarget.style.cursor = 'default'
+                }
+                break;
+            
+            case "mouseleave":
+            
+                break;
         }
     })
 
@@ -154,7 +161,7 @@ $(() => {
         data.mouse.start = {y: event.pageY, x: event.pageX}
     })
     .mousemove(event => {
-        if (event.buttons !== 1 || data.draggableWinIcon || Object.keys(data.mouse.start).length == 0) return
+        if (event.buttons !== 1 || data.switches.draggableWinIcon || Object.keys(data.mouse.start).length == 0) return
         const selectionBox = $('.selectionBox')[0]
         selectionBox.style.display = 'block'
         selectionBox.style.top = data.mouse.start.y + 'px'

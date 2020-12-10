@@ -41,11 +41,12 @@
     box-sizing: border-box;
 }
 body {
-    min-width: 100%;
+    min-width: 100vw;
     min-height: 100vh;
     background-image: url('../images/wallpaper.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    color: white;
     margin: 0vh;
     overflow: hidden;
     -moz-user-select: none;
@@ -69,9 +70,8 @@ p {
 }
 /* upper taskbar */
 .taskbar {
-    background-color: rgba(0, 0, 0, 0.836);
+    background-color: rgba(0, 0, 0, 0.5);
     display: inline-flex;
-    color: white;
     position: relative;
     width: 100vw;
     height: 2.4vh;
@@ -118,7 +118,6 @@ p {
 .desktopFile {
     z-index: 2;
     position: absolute;
-    color: white;
     text-align: center;
     border-radius: 1vh;
     display: flex;
@@ -134,7 +133,7 @@ p {
     font-size: 1.5vh;
 }
 .desktopFile:hover {
-    background-color: #9fd3ff29;
+    background-color: #9fd3ff29 !important;
 }
 .desktopFileActive {
     background-color: #9fd2ff6b !important;
@@ -144,24 +143,19 @@ p {
     z-index: 2;
     position: fixed;
     display: none;
-    color: white;
-    background-color: #2D2D2D;
-    box-shadow: 0 0 1.6vh 0 rgba(0, 0, 0, 0.75);
     border-radius: .5vh;
-    border: .25vh #5C5C5C solid;
     overflow: hidden;
+    background-color: #2D2D2D;
+    border: #5C5C5C .1vh solid;
+    box-shadow: black 0px 0px 2vh 0.1vh;
 }
 .windowTitleBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #494949;
-    position: relative;
-    color: white;
-    width: 100%;
-    height: 3vh;
+    height: fit-content;
     font-size: 2.2vh;
-    border-bottom: .25vh #141414 solid;
+    background-color: #494949;
 }
 .windowTitle {
     display: inline-block;
