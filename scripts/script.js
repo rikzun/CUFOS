@@ -188,6 +188,7 @@ $(() => {
     setInterval(()=>{
         const date = new Date()
         $('#taskbarClock')[0].textContent = 
-        `${translate(`WEEKDAY${date.getDay()}`)} ${strftime(date, '%H:%M:%S')}`
+        `${translate(`WEEKDAY${date.getDay()}`)} ${strftime(date, '%H:%M')}`
+ //     `${translate(`WEEKDAY${date.getDay()}`)} ${strftime(date, '%H:%M:%S')}`
     }, 1000)
 })
