@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="./styles/vendors/jquery-ui.css">
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/vendors/pro.min.css">
+    <link rel="stylesheet" href="./styles/calculator.css">
     <meta charset="utf-8">
     <title>CUFOS</title>
     <meta name="description" content="Concept of a User-Friendly Operating System">
@@ -18,6 +19,7 @@
                 <div class="taskbarElement"><p data-default-string="FILE"></p></div>
             </div>
             <div class="taskbarItemsLeft">
+                <i class="taskbarElement fas fa-calculator"></i>
                 <i class="taskbarElement fas fa-wifi"></i>
                 <i class="taskbarElement fas fa-volume"></i>
                 <div class="taskbarElement"><p id="taskbarClock"></p></div>
@@ -28,6 +30,43 @@
 
         <!-- desktop -->
         <div class="desktop">
+<!--start calculator-->          
+            <div class="calc-container">
+                <div class="calc-display">
+                    <div class="calc-menu">
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+                    <span class="calc-display-inner">0</span>
+                </div>
+                <div class="calc-board">
+                    <div class="calc-grid1">
+                        <div class="button button--clear" data-key="Escape">AC</div>
+                        <div class="button" data-key="+/-">+/-</div>
+                        <div class="button" data-key="%">%</div>
+                        <div class="button button--operator" data-key="/">&#247;</div>
+                        <div class="button" data-key="7">7</div>
+                        <div class="button" data-key="8">8</div>
+                        <div class="button" data-key="9">9</div>
+                        <div class="button button--operator" data-key="*">&#215;</div>
+                        <div class="button" data-key="4">4</div>
+                        <div class="button" data-key="5">5</div>
+                        <div class="button" data-key="6">6</div>
+                        <div class="button button--operator" data-key="-">&#8722;</div>
+                        <div class="button" data-key="1">1</div>
+                        <div class="button" data-key="2">2</div>
+                        <div class="button" data-key="3">3</div>
+                        <div class="button button--operator" data-key="+">&#43;</div>
+                    </div>
+                    <div class="calc-grid2">
+                        <div class="button button-zero" data-key="0">0</div>
+                        <div class="button" data-key=".">.</div>
+                        <div class="button button--operator" data-key="=">=</div>
+                    </div>
+                </div> 
+            </div>
+<!--end calculator-->
             <div class="selectionBox"></div>
             <div class="desktopFile" id="gen" data-open-app="#OSSettings" style="left: 40vw; top: 30vh">
                 <i class="desktopFileIcon fas fa-hammer"></i>
@@ -95,4 +134,5 @@
 <script src="./scripts/utils.js"></script>
 <script src="./scripts/defaultSettings.js"></script>
 <script src="./scripts/script.js"></script>
+<script src="./scripts/calculator.js"></script>
 </html>

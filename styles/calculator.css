@@ -1,0 +1,214 @@
+/* variables */
+.calc-container {
+    font-family: sans-serif;
+    height: 322px;
+    overflow: hidden;
+    width: 234px;
+    border-radius: 5px;
+    color: #000000;
+    margin: 200px 15px;
+  }
+  
+  .calc-display {
+    background-color: #292929;
+    font-size: 48px;
+    font-weight: 100;
+    height: 81px;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -webkit-border-bottom-right-radius: 0;
+    -webkit-border-bottom-left-radius: 0;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    -moz-border-radius-bottomright: 0;
+    -moz-border-radius-bottomleft: 0;
+  }
+  
+  .calc-menu {
+    position: relative;
+  }
+  .calc-menu span {
+    position: absolute;
+    top: 5px;
+    border-radius: 50%;
+    width: 12px;
+    height: 12px;
+  }
+  
+  .calc-menu span.red {
+    background-color: #fc5754;
+    left: 8px;
+  }
+  .calc-menu span.yellow {
+    background-color: #fdbd41;
+    left: 28px;
+  }
+  .calc-menu span.green {
+    background-color: #35cc4b;
+    left: 48px;
+  }
+  
+  .calc-display-inner {
+    color: #fff;
+    position: absolute;
+    bottom: 0.015em;
+    right: 0.35em;
+  }
+  
+  .calc-board {
+    border-bottom: 1px solid rgb(41, 41, 41);
+    border-left: 1px solid rgb(41, 41, 41);
+    border-right: 1px solid rgb(41, 41, 41);
+    font-weight: 400;
+    overflow: hidden;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    -webkit-border-top-left-radius: 0;
+    -webkit-border-top-right-radius: 0;
+    -webkit-border-bottom-right-radius: 5px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-topleft: 0;
+    -moz-border-radius-topright: 0;
+    -moz-border-radius-bottomright: 5px;
+    -moz-border-radius-bottomleft: 5px;
+  }
+  
+  .calc-grid1 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .button {
+    background-color: #eaeaea;
+    font-size: 20px;
+    height: 48px;
+    line-height: 47px;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  .button--operator {
+    background-color: #f5923e;
+    color: #fff;
+    font-size: 1.6em;
+  }
+  .button-zero {
+    border-right: 1px solid #a9a9a9;
+    text-align: left;
+    padding-left: 1.2em;
+  }
+  
+  .calc-grid1 .button {
+    border-bottom: 1px solid #a9a9a9;
+  }
+  .calc-grid1 .button:not(:nth-child(4n)) {
+    border-right: 1px solid #a9a9a9;
+  }
+  
+  .calc-grid2 {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+  }
+  .calc-grid2 .button:nth-child(2) {
+    border-right: 1px solid #a9a9a9;
+  }
+  
+  .js-font-size-90 {
+    font-size: 90%;
+  }
+  
+  .js-font-size-81 {
+    font-size: 81%;
+  }
+  
+  .js-font-size-72 {
+    font-size: 72%;
+  }
+  
+  .js-font-size-64 {
+    font-size: 64%;
+  }
+  
+  .js-font-size-60 {
+    font-size: 60%;
+  }
+  
+  .js-font-size-55 {
+    font-size: 55%;
+  }
+  
+  .js-font-size-52 {
+    font-size: 52%;
+  }
+  
+  .js-font-size-48 {
+    font-size: 48%;
+  }
+  
+  .js-font-size-45 {
+    font-size: 45%;
+  }
+  
+  .js-font-size-42 {
+    font-size: 42%;
+  }
+  
+  .js-font-size-40 {
+    font-size: 40%;
+  }
+  
+  .js-font-size-38 {
+    font-size: 38%;
+  }
+  
+  .js-font-size-36 {
+    font-size: 36%;
+  }
+  
+  .js-font-size-34 {
+    font-size: 34%;
+  }
+  
+  .js-font-size-32 {
+    font-size: 32%;
+  }
+  
+  .js-font-size-28 {
+    font-size: 28%;
+  }
+  
+  .js-font-size-26 {
+    font-size: 26%;
+  }
+  
+  .js-font-size-22 {
+    font-size: 22%;
+  }
+  
+  .js-font-size-21 {
+    font-size: 21%;
+  }
+  
+  .js-font-size-19 {
+    font-size: 19%;
+  }
+  
+  .js-font-size-17 {
+    font-size: 17%;
+  }
+  
+  .js-font-size-14 {
+    font-size: 14%;
+  }
+  
+  .js-active {
+    background-color: #a9a9a9;
+  }
