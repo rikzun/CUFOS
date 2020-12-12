@@ -1,0 +1,12 @@
+.default-size {
+    height: 25vh;
+    width: 30vw;
+    min-height: 10vh;
+    min-width: 10vw;
+}
+.calc-size {
+    height: 34vh;
+    width: 12vw;
+    min-height: 34vh;
+    min-width: 12vw;
+}

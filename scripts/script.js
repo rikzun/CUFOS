@@ -68,7 +68,8 @@ $(() => {
     })
 
     //open or selected file
-    $(".desktopFile").dblclick(event => {
+    $(".desktopFile")
+    .dblclick(event => {
         if (localStorage.openClick == 'double') {
             $(event.currentTarget.dataset.openApp).show()
         } else {
@@ -132,19 +133,21 @@ $(() => {
     $(".window").draggable({
         cursor: 'default',
         cancel: ".windowTitleButtons",
-        handle: ".windowTitleBar",
+        handle: "div[data-handler]",
         start: event => {},
         stop: event => {}
     }).resizable({
-		handles: "all",
-        minHeight: 150,
-        minWidth: 200
+        handles: "all"
     })
 
     //close window button
     $("div[data-win-act='close']").click(event => {
-        const node = event.currentTarget.parentElement.parentElement.offsetParent
-        node.style.display = "none"
+        let window = event.currentTarget
+        for (let i = 0; i < 5; i++) {
+            window = window.parentElement
+            if (window.classList.contains('window') && window.id) break
+        }
+        window.style.display = "none"
     })
 
 //--------

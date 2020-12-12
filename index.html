@@ -2,8 +2,9 @@
 <html>
 <head>
     <link rel="stylesheet" href="./styles/vendors/jquery-ui.css">
-    <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/vendors/pro.min.css">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/sizes.css">
     <link rel="stylesheet" href="./styles/calculator.css">
     <meta charset="utf-8">
     <title>CUFOS</title>
@@ -15,68 +16,35 @@
         <!-- upper taskbar -->
         <div class="taskbar">
             <div class="taskbarItems">
-                <i class="taskbarElement fas fa-expand"></i>
+                <div class="taskbarElement"><i class="fas fa-expand"></i></div>
                 <div class="taskbarElement"><p data-default-string="FILE"></p></div>
             </div>
             <div class="taskbarItemsLeft">
-                <i class="taskbarElement fas fa-calculator"></i>
-                <i class="taskbarElement fas fa-wifi"></i>
-                <i class="taskbarElement fas fa-volume"></i>
+                <div class="taskbarElement"><i class="fas fa-wifi"></i></div>
+                <div class="taskbarElement"><i class="fas fa-volume"></i></div>
                 <div class="taskbarElement"><p id="taskbarClock"></p></div>
-                <i class="taskbarElement fas fa-search"></i>
             </div>
         </div>
         <!-- upper taskbar end -->
 
         <!-- desktop -->
         <div class="desktop">
-<!--start calculator-->          
-            <div class="calc-container">
-                <div class="calc-display">
-                    <div class="calc-menu">
-                        <span class="red"></span>
-                        <span class="yellow"></span>
-                        <span class="green"></span>
-                    </div>
-                    <span class="calc-display-inner">0</span>
-                </div>
-                <div class="calc-board">
-                    <div class="calc-grid1">
-                        <div class="button button--clear" data-key="Escape">AC</div>
-                        <div class="button" data-key="+/-">+/-</div>
-                        <div class="button" data-key="%">%</div>
-                        <div class="button button--operator" data-key="/">&#247;</div>
-                        <div class="button" data-key="7">7</div>
-                        <div class="button" data-key="8">8</div>
-                        <div class="button" data-key="9">9</div>
-                        <div class="button button--operator" data-key="*">&#215;</div>
-                        <div class="button" data-key="4">4</div>
-                        <div class="button" data-key="5">5</div>
-                        <div class="button" data-key="6">6</div>
-                        <div class="button button--operator" data-key="-">&#8722;</div>
-                        <div class="button" data-key="1">1</div>
-                        <div class="button" data-key="2">2</div>
-                        <div class="button" data-key="3">3</div>
-                        <div class="button button--operator" data-key="+">&#43;</div>
-                    </div>
-                    <div class="calc-grid2">
-                        <div class="button button-zero" data-key="0">0</div>
-                        <div class="button" data-key=".">.</div>
-                        <div class="button button--operator" data-key="=">=</div>
-                    </div>
-                </div> 
-            </div>
-<!--end calculator-->
             <div class="selectionBox"></div>
-            <div class="desktopFile" id="gen" data-open-app="#OSSettings" style="left: 40vw; top: 30vh">
+            <div class="desktopFile" id="gen" data-open-app="#OSSettings" style="left: 5vw; top: 30vh">
                 <i class="desktopFileIcon fas fa-hammer"></i>
                 <div class="desktopFileTitle">
                     <p data-default-string="SETTINGS"></p>
                 </div>
             </div>
-            <div class="desktopFile" id="gen" data-open-app="#defaultWin" style="left: 60vw; top: 30vh">
+            <div class="desktopFile" id="gen" data-open-app="#calc" style="left: 10vw; top: 30vh">
+                <i class="desktopFileIcon fas fa-calculator"></i>
+                <div class="desktopFileTitle">
+                    <p data-default-string="CALC"></p>
+                </div>
+            </div>
+            <div class="desktopFile" id="gen" data-open-app="#defaultWin" style="left: 15vw; top: 30vh">
                 <i class="desktopFileIcon fas fa-file-alt"></i>
-                <div class="desktopFileTitle">unnamed1.txt</div>
+                <div class="desktopFileTitle">unknown</div>
             </div>
         </div>
         <!-- desktop end -->
@@ -90,8 +58,8 @@
     </div>
     
     <!-- hidden windows -->
-    <div class="window" id="defaultWin" style="width: 30vw; height: 25vh; left: 50vw; top: 25vh">
-        <div class="windowTitleBar">
+    <div class="window default-size" id="defaultWin">
+        <div class="windowTitleBar" data-handler>
             <div class="windowTitle"><p data-default-string="TITLE1"></p></div>
             <div class="windowTitleButtons">
                 <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
@@ -104,8 +72,8 @@
 		</div>
     </div>
 
-    <div class="window" id="OSSettings" style="width: 30vw; height: 25vh; left: 42vw; top: 40vh">
-        <div class="windowTitleBar">
+    <div class="window default-size" id="OSSettings">
+        <div class="windowTitleBar" data-handler>
             <div class="windowTitle"><p data-default-string="SETTINGS"></p></div>
             <div class="windowTitleButtons">
                 <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
@@ -124,6 +92,44 @@
                 <p data-default-string="CHANGE_CLICK_DOUBLE"></p> - <div id="change_click_double">CLICK</div>
             </div>
 		</div>
+    </div>
+      
+    <div class="window calc-container calc-size" id="calc" style="left: 42vw; top: 40vh">
+        <div class="calc-display" data-handler>
+            <div class="windowTitleBar calc-menu">
+                <div class="windowTitleButtons">
+                    <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
+                    <div class="windowButton buttonMaximize" data-win-act="maximize"></div>
+                    <div class="windowButton buttonClose" data-win-act="close"></div>
+                </div>
+            </div>
+            <span class="calc-display-inner">0</span>
+        </div>
+        <div class="calc-board">
+            <div class="calc-grid1">
+                <div class="button button--clear" data-key="Escape">AC</div>
+                <div class="button" data-key="+/-">+/-</div>
+                <div class="button" data-key="%">%</div>
+                <div class="button button--operator" data-key="/">&#247;</div>
+                <div class="button" data-key="7">7</div>
+                <div class="button" data-key="8">8</div>
+                <div class="button" data-key="9">9</div>
+                <div class="button button--operator" data-key="*">&#215;</div>
+                <div class="button" data-key="4">4</div>
+                <div class="button" data-key="5">5</div>
+                <div class="button" data-key="6">6</div>
+                <div class="button button--operator" data-key="-">&#8722;</div>
+                <div class="button" data-key="1">1</div>
+                <div class="button" data-key="2">2</div>
+                <div class="button" data-key="3">3</div>
+                <div class="button button--operator" data-key="+">&#43;</div>
+            </div>
+            <div class="calc-grid2">
+                <div class="button button-zero" data-key="0">0</div>
+                <div class="button" data-key=".">.</div>
+                <div class="button button--operator" data-key="=">=</div>
+            </div>
+        </div> 
     </div>
     <!-- hidden windows end -->
 </body>

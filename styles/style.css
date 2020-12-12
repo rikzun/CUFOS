@@ -3,11 +3,11 @@
 /* ===== */
 .ui-resizable-e, 
 .ui-resizable-w {
-	width: 1.1vh;
+	width: 1vh;
 }
 .ui-resizable-n, 
 .ui-resizable-s {
-	height: 1.1vh;
+	height: 1vh;
 }
 .ui-resizable-se {
     right: -5px;
@@ -99,7 +99,6 @@ p {
     background-color: lightseagreen;
 }
 #taskbarClock {
-    min-width: 5vw;
     text-align: center;
 }
 /* lower taskbar */
@@ -148,27 +147,28 @@ p {
     background-color: #2D2D2D;
     border: #5C5C5C .1vh solid;
     box-shadow: black 0px 0px 2vh 0.1vh;
+    left: 50%;
+    top: 50%;
 }
 .windowTitleBar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: fit-content;
-    font-size: 2.2vh;
+    height: 2.2vh;
     background-color: #494949;
 }
 .windowTitle {
     display: inline-block;
-    margin-left: .5vw;
+    margin-left: .3vw;
 }
 .windowTitleButtons {
-    display: inline-flex;
-    margin-right: .5vw;
+    display: flex;
+    margin-right: 6px;
 }
 .windowButton {
     height: .8vw;
     width: .8vw;
-    margin-left: .2vw;
+    margin-left: 4px;
     background-repeat: no-repeat;
     background-position: center;
 }
@@ -185,34 +185,3 @@ p {
     padding-left: .5vw;
     font-size: 2vh;
 }
-
-
-
-
-
-
-/* .apple-svg {
-    width: 12px;
-}
-.menu-svg {
-    width: 12px;
-}
-.apple-svg:hover {
-    background-color: lightseagreen;
-}
-.menu-svg:hover {
-    background-color: lightseagreen;
-}
-.font-svg {
-    font-family: sans-serif;
-}
-.margin-svg {
-    margin: .0vw .5vw .0vw .5vw;
-}
-.taskbar-block {
-    height: 2.4vh;
-} 
-.style-string {
-    font-family: sans-serif;
-    margin: .0vw .5vw .0vw .5vw;
-} */
