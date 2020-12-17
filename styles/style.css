@@ -43,9 +43,6 @@
 body {
     min-width: 100vw;
     min-height: 100vh;
-    background-image: url('../images/wallpaper.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
     color: white;
     margin: 0vh;
     overflow: hidden;
@@ -60,6 +57,9 @@ p {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    background-image: url('../images/wallpaper.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .selectionBox {
     z-index: 3;

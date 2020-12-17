@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="./styles/vendors/jquery-ui.css">
     <link rel="stylesheet" href="./styles/vendors/pro.min.css">
@@ -9,6 +10,7 @@
     <title>CUFOS</title>
     <meta name="description" content="Concept of a User-Friendly Operating System">
 </head>
+
 <body>
     <div class="display">
 
@@ -26,7 +28,9 @@
             <div class="taskbarItemsLeft">
                 <div class="taskbarElement"><i class="fas fa-wifi"></i></div>
                 <div class="taskbarElement"><i class="fas fa-volume"></i></div>
-                <div class="taskbarElement"><p id="taskbarClock"></p></div>
+                <div class="taskbarElement">
+                    <p id="taskbarClock"></p>
+                </div>
             </div>
         </div>
         <!-- upper taskbar end -->
@@ -63,11 +67,13 @@
         <a>kekf</a>
     </div>
     <!-- dropdowns end -->
-    
+
     <!-- windows -->
     <div class="window default-size" id="defaultWin">
         <div class="windowTitleBar" data-handler>
-            <div class="windowTitle"><p data-default-string="TITLE1"></p></div>
+            <div class="windowTitle">
+                <p data-default-string="TITLE1"></p>
+            </div>
             <div class="windowTitleButtons">
                 <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
                 <div class="windowButton buttonMaximize" data-win-act="maximize"></div>
@@ -76,12 +82,14 @@
         </div>
         <div class="windowContent">
             <p data-default-string="CONTENT"></p>
-		</div>
+        </div>
     </div>
 
     <div class="window default-size" id="OSSettings">
         <div class="windowTitleBar" data-handler>
-            <div class="windowTitle"><p data-default-string="SETTINGS"></p></div>
+            <div class="windowTitle">
+                <p data-default-string="SETTINGS"></p>
+            </div>
             <div class="windowTitleButtons">
                 <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
                 <div class="windowButton buttonMaximize" data-win-act="maximize"></div>
@@ -98,7 +106,7 @@
             <div style="display: flex;">
                 <p data-default-string="CHANGE_CLICK_DOUBLE"></p> - <div id="change_click_double">CLICK</div>
             </div>
-		</div>
+        </div>
     </div>
     <!-- windows end -->
 </body>
@@ -108,5 +116,7 @@
 <script src="./scripts/lang.js"></script>
 <script src="./scripts/utils.js"></script>
 <script src="./scripts/defaultSettings.js"></script>
+<script src="./scripts/classes.js"></script>
 <script src="./scripts/script.js"></script>
+
 </html>

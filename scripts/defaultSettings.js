@@ -1,6 +1,7 @@
 const standardSettings = {
     currentLang: 'en',
-    openClick: 'double'
+    openClick: 'double',
+    clickDelay: 600
 }
 
 for (const [key, value] of Object.entries(standardSettings)) {
