@@ -1,36 +1,36 @@
 /* ===== */
 /*  nms  */
 /* ===== */
-.ui-resizable-e, 
+.ui-resizable-e,
 .ui-resizable-w {
-	width: 1vh;
+    width: 1vh;
 }
-.ui-resizable-n, 
+.ui-resizable-n,
 .ui-resizable-s {
-	height: 1vh;
+    height: 1vh;
 }
 .ui-resizable-se {
     right: -5px;
     bottom: -5px;
 }
-.ui-resizable-se, 
-.ui-resizable-sw, 
-.ui-resizable-ne, 
+.ui-resizable-se,
+.ui-resizable-sw,
+.ui-resizable-ne,
 .ui-resizable-nw {
-    right: -.3vw;
-    bottom: -.6vh;
+    right: -0.3vw;
+    bottom: -0.6vh;
     height: 1.3vh;
-    width: .64vw;
+    width: 0.64vw;
 }
 .ui-icon {
     display: none;
     background-image: none;
 }
-.fa, 
-.fab, 
-.fad, 
-.fal, 
-.far, 
+.fa,
+.fab,
+.fad,
+.fal,
+.far,
 .fas {
     line-height: normal !important;
 }
@@ -51,7 +51,7 @@ body {
     overflow: hidden;
     -moz-user-select: none;
     -khtml-user-select: none;
-    user-select: none;     
+    user-select: none;
 }
 p {
     margin: 0;
@@ -80,12 +80,12 @@ p {
     box-shadow: 0 1vh 3vh 1vh rgb(0 0 0 / 12%);
 }
 .taskbarItems {
-    margin-left: .2vw;
+    margin-left: 0.2vw;
     width: fit-content;
     display: inline-flex;
 }
 .taskbarItemsLeft {
-    margin-right: .2vw;
+    margin-right: 0.2vw;
     width: fit-content;
     display: inline-flex;
     margin-left: auto;
@@ -93,7 +93,7 @@ p {
 .taskbarElement {
     display: inline-flex !important;
     align-items: center;
-    padding: .1vw .3vw 0vh .3vw;
+    padding: 0.1vw 0.3vw 0vh 0.3vw;
 }
 .taskbarElement:hover {
     background-color: lightseagreen;
@@ -111,7 +111,7 @@ p {
 .desktop {
     z-index: 1;
     width: 100vw;
-    height: -webkit-fill-available;
+    height: inherit;
     position: relative;
 }
 .desktopFile {
@@ -126,7 +126,7 @@ p {
 }
 .desktopFileIcon {
     font-size: 5vh;
-    padding-top: .5vh;
+    padding-top: 0.5vh;
 }
 .desktopFileTitle {
     font-size: 1.5vh;
@@ -142,10 +142,10 @@ p {
     z-index: 2;
     position: fixed;
     display: none;
-    border-radius: .5vh;
+    border-radius: 0.5vh;
     overflow: hidden;
-    background-color: #2D2D2D;
-    border: #5C5C5C .1vh solid;
+    background-color: #2d2d2d;
+    border: #5c5c5c 0.1vh solid;
     box-shadow: black 0px 0px 2vh 0.1vh;
     left: 50%;
     top: 50%;
@@ -159,15 +159,15 @@ p {
 }
 .windowTitle {
     display: inline-block;
-    margin-left: .3vw;
+    margin-left: 0.3vw;
 }
 .windowTitleButtons {
     display: flex;
     margin-right: 6px;
 }
 .windowButton {
-    height: .8vw;
-    width: .8vw;
+    height: 0.8vw;
+    width: 0.8vw;
     margin-left: 4px;
     background-repeat: no-repeat;
     background-position: center;
@@ -182,7 +182,7 @@ p {
     background-image: url('../images/minimize.svg');
 }
 .windowContent {
-    padding-left: .5vw;
+    padding-left: 0.5vw;
     font-size: 2vh;
 }
 /* dropdowns */
@@ -190,7 +190,7 @@ p {
     position: fixed;
     top: 20vh;
     background-color: #6a6a6a;
-    padding-block: .4vh;
+    padding-block: 0.4vh;
     display: none;
 }
 .dropdownActive {
