@@ -185,3 +185,14 @@ p {
     padding-left: .5vw;
     font-size: 2vh;
 }
+/* dropdowns */
+.dropdown {
+    position: fixed;
+    top: 20vh;
+    background-color: #6a6a6a;
+    padding-block: .4vh;
+    display: none;
+}
+.dropdownActive {
+    display: block;
+}

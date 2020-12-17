@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="./styles/vendors/pro.min.css">
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/sizes.css">
-    <link rel="stylesheet" href="./styles/calculator.css">
     <meta charset="utf-8">
     <title>CUFOS</title>
     <meta name="description" content="Concept of a User-Friendly Operating System">
@@ -16,8 +15,13 @@
         <!-- upper taskbar -->
         <div class="taskbar">
             <div class="taskbarItems">
-                <div class="taskbarElement"><i class="fas fa-expand"></i></div>
-                <div class="taskbarElement"><p data-default-string="FILE"></p></div>
+                <div class="taskbarElement noDropdown"><i class="fas fa-expand"></i></div>
+                <div class="taskbarElement" data-open-dropdown="system">
+                    <p data-default-string="SYSTEM"></p>
+                </div>
+                <div class="taskbarElement" data-open-dropdown="pc">
+                    <p data-default-string="PC"></p>
+                </div>
             </div>
             <div class="taskbarItemsLeft">
                 <div class="taskbarElement"><i class="fas fa-wifi"></i></div>
@@ -36,12 +40,6 @@
                     <p data-default-string="SETTINGS"></p>
                 </div>
             </div>
-            <div class="desktopFile" id="gen" data-open-app="#calc" style="left: 10vw; top: 30vh">
-                <i class="desktopFileIcon fas fa-calculator"></i>
-                <div class="desktopFileTitle">
-                    <p data-default-string="CALC"></p>
-                </div>
-            </div>
             <div class="desktopFile" id="gen" data-open-app="#defaultWin" style="left: 15vw; top: 30vh">
                 <i class="desktopFileIcon fas fa-file-alt"></i>
                 <div class="desktopFileTitle">unknown</div>
@@ -56,8 +54,17 @@
         <!-- lower taskbar end -->
 
     </div>
+
+    <!-- dropdowns -->
+    <div data-dropdown="system" data-dropdown-align="center" class="dropdown">
+        <a>kekf</a>
+    </div>
+    <div data-dropdown="pc" data-dropdown-align="center" class="dropdown">
+        <a>kekf</a>
+    </div>
+    <!-- dropdowns end -->
     
-    <!-- hidden windows -->
+    <!-- windows -->
     <div class="window default-size" id="defaultWin">
         <div class="windowTitleBar" data-handler>
             <div class="windowTitle"><p data-default-string="TITLE1"></p></div>
@@ -93,45 +100,7 @@
             </div>
 		</div>
     </div>
-      
-    <div class="window calc-container calc-size" id="calc" style="left: 42vw; top: 40vh">
-        <div class="calc-display" data-handler>
-            <div class="windowTitleBar calc-menu">
-                <div class="windowTitleButtons">
-                    <div class="windowButton buttonMinimize" data-win-act="minimize"></div>
-                    <div class="windowButton buttonMaximize" data-win-act="maximize"></div>
-                    <div class="windowButton buttonClose" data-win-act="close"></div>
-                </div>
-            </div>
-            <span class="calc-display-inner">0</span>
-        </div>
-        <div class="calc-board">
-            <div class="calc-grid1">
-                <div class="button button--clear" data-key="Escape">AC</div>
-                <div class="button" data-key="+/-">+/-</div>
-                <div class="button" data-key="%">%</div>
-                <div class="button button--operator" data-key="/">&#247;</div>
-                <div class="button" data-key="7">7</div>
-                <div class="button" data-key="8">8</div>
-                <div class="button" data-key="9">9</div>
-                <div class="button button--operator" data-key="*">&#215;</div>
-                <div class="button" data-key="4">4</div>
-                <div class="button" data-key="5">5</div>
-                <div class="button" data-key="6">6</div>
-                <div class="button button--operator" data-key="-">&#8722;</div>
-                <div class="button" data-key="1">1</div>
-                <div class="button" data-key="2">2</div>
-                <div class="button" data-key="3">3</div>
-                <div class="button button--operator" data-key="+">&#43;</div>
-            </div>
-            <div class="calc-grid2">
-                <div class="button button-zero" data-key="0">0</div>
-                <div class="button" data-key=".">.</div>
-                <div class="button button--operator" data-key="=">=</div>
-            </div>
-        </div> 
-    </div>
-    <!-- hidden windows end -->
+    <!-- windows end -->
 </body>
 <script src="./scripts/vendors/jquery-3.5.1.js"></script>
 <script src="./scripts/vendors/jquery-ui.js"></script>
@@ -140,5 +109,4 @@
 <script src="./scripts/utils.js"></script>
 <script src="./scripts/defaultSettings.js"></script>
 <script src="./scripts/script.js"></script>
-<script src="./scripts/calculator.js"></script>
 </html>

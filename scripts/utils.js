@@ -37,3 +37,8 @@ function strftime(date, format) {
 function wait(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms))
 }
+HTMLDivElement.prototype.addStyle =
+function (style, value) {
+    this.style[style] = value
+    return this
+}

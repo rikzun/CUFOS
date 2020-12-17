@@ -4,7 +4,8 @@ const data = {
     },
     switches: {
         draggableWinIcon: false,
-        selectedFile: false
+        selectedFile: false,
+        activeDropdown: false
     }
 }
 
@@ -191,7 +192,78 @@ $(() => {
     setInterval(()=>{
         const date = new Date()
         $('#taskbarClock')[0].textContent = 
-        `${translate(`WEEKDAY${date.getDay()}`)} ${strftime(date, '%H:%M')}`
- //     `${translate(`WEEKDAY${date.getDay()}`)} ${strftime(date, '%H:%M:%S')}`
+        `${translate(`WEEKDAY${date.getDay()}`)} ${strftime(date, '%H:%M:%S')}`
     }, 1000)
+
+//-----------
+// dropdowns
+//-----------
+    function hideDropdowns() {
+        for(const node of document.querySelectorAll('.dropdown.dropdownActive')) {
+            node.classList.remove('dropdownActive')
+        }
+    }
+
+    function showDropdown(dropdown, parent) {
+        dropdown.classList.add('dropdownActive')
+        switch (dropdown.dataset.dropdownAlign) {
+            case 'left':
+                dropdown
+                    .addStyle('left', calculateRelativeUnits(
+                        parent.offsetLeft, 'vw'))
+                    .addStyle('top', calculateRelativeUnits(
+                        parent.offsetTop + parent.offsetHeight, 'vh'))
+                break
+
+            case 'center':
+                dropdown
+                    .addStyle('left', calculateRelativeUnits(
+                        parent.offsetLeft + ((parent.offsetWidth - dropdown.offsetWidth) / 2), 'vw'))
+                    .addStyle('top', calculateRelativeUnits(
+                        parent.offsetTop + parent.offsetHeight, 'vh'))
+                break
+
+            case 'right':
+                dropdown
+                    .addStyle('left', calculateRelativeUnits(
+                        parent.offsetLeft + parent.offsetWidth - dropdown.offsetWidth, 'vw'))
+                    .addStyle('top', calculateRelativeUnits(
+                        parent.offsetTop + parent.offsetHeight, 'vh'))
+                break
+        }
+        
+    }
+
+    $('.taskbarElement:not(.noDropdown)')
+    .click(async event => {
+        const parent = event.currentTarget
+        const dropdown = $(`[data-dropdown="${parent.dataset.openDropdown}"]`)[0]
+
+        if (dropdown.classList.contains('dropdownActive')) {
+            dropdown.classList.remove('dropdownActive')
+            data.switches.activeDropdown = false
+            return
+        }
+
+        hideDropdowns()
+        showDropdown(dropdown, parent)
+        await wait(50)
+        data.switches.activeDropdown = true
+
+    })
+    .hover(event => {
+        if (!data.switches.activeDropdown || !event.handleObj.origType == 'mouseenter') return
+        const parent = event.currentTarget
+        const dropdown = $(`[data-dropdown="${parent.dataset.openDropdown}"]`)[0]
+
+        hideDropdowns()
+        showDropdown(dropdown, parent)
+    })
+
+    $("body").click(event => {
+        if (!data.switches.activeDropdown) return
+        console.log('body')
+        hideDropdowns()
+        data.switches.activeDropdown = false
+    })
 })
