@@ -60,13 +60,14 @@ p {
     background-image: url('../images/wallpaper.webp');
     background-size: cover;
     background-repeat: no-repeat;
+    overflow: hidden;
 }
 .selectionBox {
     z-index: 3;
     display: none;
     position: fixed;
-    background-color: #00bcd473;
-    border: 1px solid #00bcd473;
+    background-color: #00bbd446;
+    border: 1px solid #00bbd446;
 }
 /* upper taskbar */
 .taskbar {
@@ -78,6 +79,8 @@ p {
     font-size: 1.8vh;
     z-index: 10;
     box-shadow: 0 1vh 3vh 1vh rgb(0 0 0 / 12%);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 .taskbarItems {
     margin-left: 0.2vw;
@@ -95,8 +98,8 @@ p {
     align-items: center;
     padding: 0.1vw 0.3vw 0vh 0.3vw;
 }
-.taskbarElement:hover {
-    background-color: lightseagreen;
+.taskbarElement:hover, .taskbarElementActive {
+    background-color: #00bbd4;
 }
 #taskbarClock {
     text-align: center;
@@ -116,7 +119,7 @@ p {
 }
 .desktopFile {
     z-index: 2;
-    position: absolute;
+    position: fixed;
     text-align: center;
     border-radius: 1vh;
     display: flex;
@@ -188,11 +191,32 @@ p {
 /* dropdowns */
 .dropdown {
     position: fixed;
-    top: 20vh;
-    background-color: #6a6a6a;
+    background-color: rgba(0, 0, 0, 0.5);
     padding-block: 0.4vh;
+    flex-direction: column;
     display: none;
+    z-index: 10;
+    border: 1px solid rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 0 .5vh .5vh;
 }
 .dropdownActive {
-    display: block;
+    display: flex;
+}
+.dropdown-item {
+    padding-inline: .8vw;
+    font-size: 1.8vh;
+    display: flex;
+}
+.dropdown-item-text {
+    padding-left: .6vh;
+    white-space: nowrap;
+}
+.dropdown-item:hover {
+    background-color: #00bbd4;
+}
+.dropdown-separator {
+    height: .1vh;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-block: .4vh;
 }

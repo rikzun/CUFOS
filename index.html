@@ -17,18 +17,18 @@
         <!-- upper taskbar -->
         <div class="taskbar">
             <div class="taskbarItems">
-                <div class="taskbarElement noDropdown"><i class="fas fa-expand"></i></div>
-                <div class="taskbarElement" data-open-dropdown="system">
+                <div class="taskbarElement"><i class="fas fa-expand"></i></div>
+                <div class="taskbarElement" data-open-dropdown="system" data-dropdown-align="left">
                     <p data-default-string="SYSTEM"></p>
                 </div>
-                <div class="taskbarElement" data-open-dropdown="pc">
+                <div class="taskbarElement" data-open-dropdown="pc" data-dropdown-align="left">
                     <p data-default-string="PC"></p>
                 </div>
             </div>
             <div class="taskbarItemsLeft">
                 <div class="taskbarElement"><i class="fas fa-wifi"></i></div>
                 <div class="taskbarElement"><i class="fas fa-volume"></i></div>
-                <div class="taskbarElement">
+                <div class="taskbarElement" data-open-dropdown="system" data-dropdown-align="right">
                     <p id="taskbarClock"></p>
                 </div>
             </div>
@@ -60,11 +60,81 @@
     </div>
 
     <!-- dropdowns -->
-    <div data-dropdown="system" data-dropdown-align="center" class="dropdown">
-        <a>kekf</a>
+    <div data-dropdown="system" class="dropdown">
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown unknown unknown</div>
+        </a>
+        <a class="dropdown-separator"></a>
+        <a class="dropdown-item" data-open-dropdown="pc" data-dropdown-align="right">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-separator"></a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
     </div>
-    <div data-dropdown="pc" data-dropdown-align="center" class="dropdown">
-        <a>kekf</a>
+    <div data-dropdown="pc" class="dropdown">
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item" data-open-dropdown="pcw" data-dropdown-align="right">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+    </div>
+    <div data-dropdown="pcw" class="dropdown">
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
     </div>
     <!-- dropdowns end -->
 

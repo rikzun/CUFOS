@@ -57,6 +57,7 @@ $(() => {
     $('#change_click_double').click(() => {
         localStorage.openClick = 'double'
     })
+
 //-----------------
 //  desktop files
 //-----------------
@@ -88,7 +89,7 @@ $(() => {
             event.target.style.top = calculateRelativeUnits(ui.position.top, 'vh')
             event.target.style.left = calculateRelativeUnits(ui.position.left, 'vw')
 
-            await wait(500)
+            await wait(100)
             data.switches.draggableWinIcon = false
         }
     })
@@ -142,6 +143,7 @@ $(() => {
     })
     .mousedown((event) => {
         if (event.target.className !== 'desktop') return
+        $('body').click()
         data.mouse.start = { y: event.pageY, x: event.pageX }
     })
     .mousemove((event) => {
@@ -179,48 +181,72 @@ $(() => {
 //-------------
 //  dropdowns
 //-------------
+    function showDropdown(dropdown, parent, multilevel) {
+        parent.classList.add('taskbarElementActive')
+        dropdown.classList.add('dropdownActive')
+
+        let top = parent.parentNode.parentNode.offsetTop + parent.parentNode.parentNode.offsetHeight
+        //shit for normal top, checking padding and border dropdown class
+        if (multilevel) top = parent.getBoundingClientRect().top - Number(getComputedStyle(parent.parentNode).padding.split(' ')[0].replace('px', '')) - 1
+
+        function checkOverflow(left) {
+            if (left + dropdown.offsetWidth > window.innerWidth) {
+                left -= ((left + dropdown.offsetWidth) - window.innerWidth)
+            } else if (left < 0) {
+                left =0
+            }
+            return left
+        }
+
+        switch (parent.dataset.dropdownAlign) {
+            case 'left': {
+                const left = checkOverflow(parent.offsetLeft)
+
+                dropdown
+                    .addStyle('left', calculateRelativeUnits(left, 'vw'))
+                    .addStyle('top', calculateRelativeUnits(top, 'vh'))
+                break
+            }
+
+            case 'center': {
+                const left = checkOverflow(parent.offsetLeft + (parent.offsetWidth - dropdown.offsetWidth) / 2)
+
+                dropdown
+                    .addStyle('left', calculateRelativeUnits(left, 'vw'))
+                    .addStyle('top', calculateRelativeUnits(top, 'vh'))
+                break
+            }
+
+            case 'right': {
+                let left = checkOverflow(parent.offsetLeft + parent.offsetWidth - dropdown.offsetWidth)
+                if (multilevel) left = parent.getBoundingClientRect().left + parent.getBoundingClientRect().width
+                
+                dropdown
+                    .addStyle('left', calculateRelativeUnits(left, 'vw'))
+                    .addStyle('top', calculateRelativeUnits(top, 'vh'))
+                break
+            }
+                
+        }
+    }
+
     function hideDropdowns() {
+        for (const node of document.querySelectorAll('.taskbarElementActive[data-open-dropdown]')) {
+            node.classList.remove('taskbarElementActive')
+        }
+
         for (const node of document.querySelectorAll('.dropdown.dropdownActive')) {
             node.classList.remove('dropdownActive')
         }
     }
 
-    function showDropdown(dropdown, parent) {
-        dropdown.classList.add('dropdownActive')
-        switch (dropdown.dataset.dropdownAlign) {
-            case 'left':
-                dropdown
-                    .addStyle('left', calculateRelativeUnits(
-                        parent.offsetLeft, 'vw'))
-                    .addStyle('top', calculateRelativeUnits(
-                        parent.offsetTop + parent.offsetHeight, 'vh'))
-                break
-
-            case 'center':
-                dropdown
-                    .addStyle('left', calculateRelativeUnits(
-                        parent.offsetLeft + (parent.offsetWidth - dropdown.offsetWidth) / 2, 'vw'))
-                    .addStyle('top', calculateRelativeUnits(
-                        parent.offsetTop + parent.offsetHeight, 'vh'))
-                break
-
-            case 'right':
-                dropdown
-                    .addStyle('left', calculateRelativeUnits(
-                        parent.offsetLeft + parent.offsetWidth - dropdown.offsetWidth, 'vw'))
-                    .addStyle('top', calculateRelativeUnits(
-                        parent.offsetTop + parent.offsetHeight, 'vh'))
-                break
-        }
-    }
-
-    $('.taskbarElement:not(.noDropdown)')
+    $('[data-open-dropdown]')
     .click(async (event) => {
         const parent = event.currentTarget
         const dropdown = $(`[data-dropdown="${parent.dataset.openDropdown}"]`)[0]
 
         if (dropdown.classList.contains('dropdownActive')) {
-            dropdown.classList.remove('dropdownActive')
+            hideDropdowns()
             data.switches.activeDropdown = false
             return
         }
@@ -231,17 +257,24 @@ $(() => {
         data.switches.activeDropdown = true
     })
     .hover((event) => {
-        if (!data.switches.activeDropdown || !event.handleObj.origType == 'mouseenter') return
+        if (!data.switches.activeDropdown) return
+        if (event.handleObj.origType !== 'mouseenter' && event.handleObj.origType !== 'mouseleave') return
+            
         const parent = event.currentTarget
         const dropdown = $(`[data-dropdown="${parent.dataset.openDropdown}"]`)[0]
 
+        if (parent.classList.contains('dropdown-item')) {
+            showDropdown(dropdown, parent, true)
+            return
+        }
+        if (dropdown.classList.contains('dropdownActive')) return
+        
         hideDropdowns()
         showDropdown(dropdown, parent)
     })
 
-    $('body').click((event) => {
+    $('body').click(() => {
         if (!data.switches.activeDropdown) return
-        console.log('body')
         hideDropdowns()
         data.switches.activeDropdown = false
     })
