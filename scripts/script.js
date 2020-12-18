@@ -7,7 +7,8 @@ const data = {
         selectedFile: false,
         activeDropdown: false
     },
-    fileController: new FilesController(localStorage.clickDelay)
+    fileController: new FilesController(localStorage.clickDelay),
+    grid: new Grid($('.desktop')[0], $('.desktopFile')[0])
 }
 
 function changeLang(lang) {
@@ -86,8 +87,9 @@ $(() => {
             data.switches.draggableWinIcon = true
         },
         stop: async (event, ui) => {
-            event.target.style.top = calculateRelativeUnits(ui.position.top, 'vh')
-            event.target.style.left = calculateRelativeUnits(ui.position.left, 'vw')
+            let posOnGrid = data.grid.nodeFromPoint(ui.position.left, ui.position.top)
+            event.target.style.top = calculateRelativeUnits(posOnGrid.posY, 'vh')
+            event.target.style.left = calculateRelativeUnits(posOnGrid.posX, 'vw')
 
             await wait(100)
             data.switches.draggableWinIcon = false
