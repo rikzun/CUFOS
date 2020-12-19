@@ -220,3 +220,8 @@ p {
     background-color: rgba(255, 255, 255, 0.2);
     margin-block: .4vh;
 }
+.dropdown-shadow {
+    box-shadow: 
+    0.5284vh 0.5284vh 0.7926vh -.1321vh rgb(0 0 0 / 12%);
+    }
+
