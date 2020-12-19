@@ -97,15 +97,21 @@ $(() => {
     })
 
     //change cursor style
-    $('.desktopFile').hover((event) => {
-        if(event.handleObj.origType !== 'mouseenter') return
+    $('.desktopFile').hover((eventIn) => {
+        if(eventIn.handleObj.origType !== 'mouseenter') return
 
         if (localStorage.openClick == 'single') {
             $('body').click()
-            event.currentTarget.style.cursor = 'pointer'
-            event.currentTarget.classList.add('desktopFileActive')
+            eventIn.currentTarget.style.cursor = 'pointer'
+            data.fileController.selectionOneClickTimer = setTimeout(() => {
+                data.fileController.selectFile(eventIn.currentTarget)
+            }, 300)
         } else {
-            event.currentTarget.style.cursor = 'default'
+            eventIn.currentTarget.style.cursor = 'default'
+        }
+    }, (eventOut) => {
+        if(data.fileController.selectionOneClickTimer) {
+            clearTimeout(data.fileController.selectionOneClickTimer)
         }
     })
 

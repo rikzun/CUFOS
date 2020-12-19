@@ -8,16 +8,26 @@ class FilesController {
         this.clicks = 0
         this.timer = null
         this.target = null
+        this.selectionOneClickTimer = null
     }
 
     resetFields() {
         this.clicks = 0
-        this.timer = null
+        clearTimeout(this.timer)
+    }
+
+    async selectFile(node) {
+        $('body').click()
+        data.switches.selectedFile = true
+        node.classList.add('desktopFileActive')
+    
+        await wait(50)
+        data.switches.selectedFile = false
     }
 
     selectNewTarget(targetApp) {
         this.clicks++
-        selectFile(targetApp)
+        this.selectFile(targetApp)
         this.target = targetApp
         this.timer = setTimeout(() => {
             this.resetFields()
@@ -53,7 +63,7 @@ class FilesController {
             this.openNewTarget(targetApp)
         } else if (targetApp === this.target) {
             clearTimeout(this.timer)
-            selectFile(targetApp)
+            this.selectFile(targetApp)
             this.resetFields()
         } else {
             clearTimeout(this.timer)
@@ -61,15 +71,6 @@ class FilesController {
             this.openNewTarget(targetApp)
         }
     }
-}
-
-async function selectFile(node) {
-    $('body').click()
-    data.switches.selectedFile = true
-    node.classList.add('desktopFileActive')
-
-    await wait(50)
-    data.switches.selectedFile = false
 }
 
 class Grid {
