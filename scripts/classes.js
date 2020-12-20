@@ -87,7 +87,7 @@ class Grid {
         this.screenOffsetX = this.filesize.offsetWidth + (this.desktop.offsetWidth % (this.filesize.offsetWidth + this.fileOffsetX))
         this.screenOffsetY = this.filesize.offsetHeight + (this.desktop.offsetHeight % (this.filesize.offsetHeight + this.fileOffsetY))
         
-        console.log(this.width, this.height);
+        // console.log(this.width, this.height); baka senpai
         this.data = new Array(this.width * this.height)
         for (let i = 0; i < this.data.length; i++) {
             let x = ((i % this.width) * this.filesize.offsetWidth) + (this.screenOffsetX / 2) + ((i % this.width) * this.fileOffsetX) + this.fileOffsetX
@@ -138,4 +138,131 @@ function createNewFile (top, left, name, desktop) {
     desktopFile.appendChild(desktopFileIcon)
     desktopFile.appendChild(desktopFileTitle)
     desktop.appendChild(desktopFile)
+}
+
+class SelectionBox {
+    constructor(node) {
+        this.target = node
+        this.top = null
+        this.left = null
+    }
+
+    start(pageY, pageX) {
+        this.top = pageY
+        this.left = pageX
+    }
+
+    end() {
+        this.top = null
+        this.left = null
+        $(this.target).removeAttr('style')
+    }
+
+    resize(pageY, pageX) {
+        this.target.addStyle('display', 'block')
+
+        let top = this.top
+        let left = this.left 
+        let height = pageY - this.top
+        let width = pageX - this.left
+
+        if (height == 0 || width == 0) this.target.addStyle('display', 'none')
+        if (height < 0) {height = Math.abs(height); top = this.top - height}
+        if (width < 0) {width = Math.abs(width); left = this.left - width}
+
+        this.target
+            .addStyle('top', top + 'px')
+            .addStyle('left', left + 'px')
+            .addStyle('height', height + 'px')
+            .addStyle('width', width + 'px')
+    }
+}
+
+class DropdownController {
+    constructor() {
+        this.dropdown = null
+        this.parent = null
+        this.hoverMode = false
+        this.close = false
+        // this.mlvlda = []
+    }
+
+    checkOverflow(left) {
+        if (left + this.dropdown.offsetWidth > window.innerWidth) {
+            left -= ((left + this.dropdown.offsetWidth) - window.innerWidth)
+        } else if (left < 0) { left = 0 }
+        return left
+    }
+
+    click(parent, dropdown) {
+        if (this.dropdown == dropdown && this.parent == parent) { 
+            this.hide()
+            this.hoverMode = false
+            this.close = false
+            return
+        }
+        if (this.dropdown !== null && parent.classList.contains('taskbarElement')) this.hide()
+
+        this.dropdown = dropdown
+        this.parent = parent
+        this.hoverMode = true
+        this.show(!parent.classList.contains('taskbarElement'))
+    }
+
+    async show(multilvl) {
+        this.dropdown.classList.add('dropdownActive')
+        this.parent.classList.add('taskbarElementActive')
+
+        let top = find('.taskbar').getBoundingClientRect().bottom + 'px'
+        let left
+
+        if (multilvl) top = this.parent.getBoundingClientRect().top - getComputedStyle(find('.dropdown')).padding.split(' ')[0].replace('px', '') - 1
+
+        switch (this.parent.dataset.dropdownAlign) {
+            case 'left':
+                left = this.checkOverflow(this.parent.getBoundingClientRect().left)
+                break
+
+            case 'center': 
+                left = this.checkOverflow(this.parent.offsetLeft + (this.parent.offsetWidth - this.dropdown.offsetWidth) / 2)
+                break
+
+            case 'right':
+                left = this.checkOverflow(this.parent.getBoundingClientRect().right)
+                break
+        }
+
+        this.dropdown
+            .addStyle('left', vw(left))
+            .addStyle('top', vh(top))
+
+        await wait(50)
+        this.close = true
+    }
+
+    hide(click) {
+        this.dropdown.classList.remove('dropdownActive')
+        this.parent.classList.remove('taskbarElementActive')
+        
+        this.dropdown = null
+        this.parent = null
+        if (click) {
+            this.hoverMode = false
+            this.close = false
+        }
+    }
+
+    hover(parent, dropdown) {
+        this.hide()
+
+        this.dropdown = dropdown
+        this.parent = parent
+        this.show(!parent.classList.contains('taskbarElement'))
+    }
+
+    // multilvlOpen(parent, dropdown) {
+    //     this.mlvlda.push(dropdown.dataset.dropdown)
+
+    //     console.log(this.mlvlda)
+    // }
 }

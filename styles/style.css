@@ -135,10 +135,13 @@ p {
     font-size: 1.5vh;
 }
 .desktopFile:hover {
-    background-color: #9fd3ff29 !important;
+    background-color: #9fd2ff1f !important;
 }
 .desktopFileActive {
-    background-color: #9fd2ff6b !important;
+    background-color: #9fd2ff42 !important;
+}
+.desktopFileActive:hover {
+    background-color: #8bc9ff6b !important;
 }
 /* window */
 .window {

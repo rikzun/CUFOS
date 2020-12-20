@@ -41,3 +41,18 @@ HTMLDivElement.prototype.addStyle = function (style, value) {
     this.style[style] = value
     return this
 }
+
+function find(selector, dqs) {
+    if (dqs) {return document.querySelector(selector)
+    } else {return $(selector)[0]}
+}
+function findAll(selector, dqs) {
+    if (dqs) {return document.querySelectorAll(selector)
+    } else {return $(selector)}
+}
+function vh(px) {
+    return (String(px).replace('px', '') / window.innerHeight) * 100 + 'vh'
+}
+function vw(px) {
+    return (String(px).replace('px', '') / window.innerWidth) * 100 + 'vw'
+}
