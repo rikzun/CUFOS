@@ -41,6 +41,12 @@ HTMLDivElement.prototype.addStyle = function (style, value) {
     this.style[style] = value
     return this
 }
+Array.prototype.remove = function(value) {
+    const idex = this.indexOf(value)
+    if (index == -1) return null
+    this.splice(index, 1)
+    return this
+}
 
 function find(selector, dqs) {
     if (dqs) {return document.querySelector(selector)

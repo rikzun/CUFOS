@@ -189,14 +189,28 @@ $(() => {
 
         data.ddController.hover(parent, dropdown)
     })
-    // $('.dropdown-item[data-open-dropdown]').hover((event) => {
-    //     if (event.handleObj.origType !== 'mouseenter') return
 
-    //     const parent = event.currentTarget
-    //     const dropdown = find(`[data-dropdown="${parent.dataset.openDropdown}"]`)
+    $('.dropdown-item[data-open-dropdown]').hover((event) => {
+        const parent = event.currentTarget
+        const dropdown = find(`[data-dropdown="${parent.dataset.openDropdown}"]`)
 
-    //     data.ddController.multilvlOpen(parent, dropdown)
-    // })
+        switch (event.handleObj.origType) {
+            case 'mouseenter':
+                data.ddController.multilvlShow(parent, dropdown)
+                break
+
+            case 'mouseleave':
+                data.ddController.multilvlHide(parent, dropdown)
+                break
+        }
+    })
+
+    $('.dropdown[data-dropdown-type="multilevel"]').hover((event) => {
+        const parent = event.currentTarget
+        const dropdown = find(`[data-dropdown="${parent.dataset.dropdown}"]`)
+
+        data.ddController.multilvlHover(event.handleObj.origType, parent, dropdown)
+    })
 
     $('body').click(() => {
         if (!data.ddController.close) return

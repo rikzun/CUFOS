@@ -21,14 +21,14 @@
                 <div class="taskbarElement" data-open-dropdown="system" data-dropdown-align="left">
                     <p data-default-string="SYSTEM"></p>
                 </div>
-                <div class="taskbarElement" data-open-dropdown="pc" data-dropdown-align="center">
+                <div class="taskbarElement">
                     <p data-default-string="PC"></p>
                 </div>
             </div>
             <div class="taskbarItemsLeft">
                 <div class="taskbarElement"><i class="fas fa-wifi"></i></div>
                 <div class="taskbarElement"><i class="fas fa-volume"></i></div>
-                <div class="taskbarElement" data-open-dropdown="system" data-dropdown-align="left">
+                <div class="taskbarElement">
                     <p id="taskbarClock"></p>
                 </div>
             </div>
@@ -60,13 +60,13 @@
     </div>
 
     <!-- dropdowns -->
-    <div data-dropdown="system" class="dropdown dropdown-shadow">
+    <div data-dropdown="system" data-dropdown-type="main" class="dropdown dropdown-shadow">
         <a class="dropdown-item">
             <i class="fas fa-file-alt"></i>
             <div class="dropdown-item-text">unknown unknown unknown</div>
         </a>
         <a class="dropdown-separator"></a>
-        <a class="dropdown-item" data-open-dropdown="pc" data-dropdown-align="right">
+        <a class="dropdown-item" data-open-dropdown="pcw" data-dropdown-align="right">
             <i class="fas fa-file-alt"></i>
             <div class="dropdown-item-text">unknown unknown</div>
         </a>
@@ -100,7 +100,15 @@
             <div class="dropdown-item-text">unknown</div>
         </a>
     </div>
-    <div data-dropdown="pc" class="dropdown dropdown-shadow">
+    <div data-dropdown="pcw" data-dropdown-type="multilevel" class="dropdown dropdown-shadow">
+        <a class="dropdown-item" data-open-dropdown="pcwd" data-dropdown-align="right">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
+        <a class="dropdown-item">
+            <i class="fas fa-file-alt"></i>
+            <div class="dropdown-item-text">unknown</div>
+        </a>
         <a class="dropdown-item">
             <i class="fas fa-file-alt"></i>
             <div class="dropdown-item-text">unknown</div>
@@ -109,12 +117,12 @@
             <i class="fas fa-file-alt"></i>
             <div class="dropdown-item-text">unknown</div>
         </a>
-        <a class="dropdown-item" data-open-dropdown="pcw" data-dropdown-align="right">
+        <a class="dropdown-item">
             <i class="fas fa-file-alt"></i>
             <div class="dropdown-item-text">unknown</div>
         </a>
     </div>
-    <div data-dropdown="pcw" class="dropdown dropdown-shadow">
+    <div data-dropdown="pcwd" data-dropdown-type="multilevel" class="dropdown dropdown-shadow">
         <a class="dropdown-item">
             <i class="fas fa-file-alt"></i>
             <div class="dropdown-item-text">unknown</div>

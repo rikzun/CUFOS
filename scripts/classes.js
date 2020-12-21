@@ -184,7 +184,7 @@ class DropdownController {
         this.parent = null
         this.hoverMode = false
         this.close = false
-        // this.mlvlda = []
+        this.target = null
     }
 
     checkOverflow(left) {
@@ -201,12 +201,12 @@ class DropdownController {
             this.close = false
             return
         }
-        if (this.dropdown !== null && parent.classList.contains('taskbarElement')) this.hide()
+        if (this.dropdown !== null) this.hide()
 
         this.dropdown = dropdown
         this.parent = parent
         this.hoverMode = true
-        this.show(!parent.classList.contains('taskbarElement'))
+        this.show()
     }
 
     async show(multilvl) {
@@ -241,8 +241,17 @@ class DropdownController {
     }
 
     hide(click) {
-        this.dropdown.classList.remove('dropdownActive')
-        this.parent.classList.remove('taskbarElementActive')
+        if (click) {
+            for (const dropdown of findAll('[data-dropdown].dropdownActive')) {
+                dropdown.classList.remove('dropdownActive')
+            }
+            for (const dropdown of findAll('.taskbarElementActive')) {
+                dropdown.classList.remove('taskbarElementActive')
+            }
+        } else {
+            this.dropdown.classList.remove('dropdownActive')
+            this.parent.classList.remove('taskbarElementActive')
+        }
         
         this.dropdown = null
         this.parent = null
@@ -257,12 +266,40 @@ class DropdownController {
 
         this.dropdown = dropdown
         this.parent = parent
-        this.show(!parent.classList.contains('taskbarElement'))
+        this.show()
     }
 
-    // multilvlOpen(parent, dropdown) {
-    //     this.mlvlda.push(dropdown.dataset.dropdown)
+    multilvlShow(parent, dropdown) {
+        this.dropdown = dropdown
+        this.parent = parent
+        this.show(true)
+    }
 
-    //     console.log(this.mlvlda)
-    // }
+    async multilvlHide(parent, dropdown) {
+        await wait(100)
+        if (this.target == dropdown.dataset.dropdown) return
+
+        this.dropdown = dropdown
+        this.parent = parent
+        this.hide()
+    }
+
+    multilvlHover(event, parent, dropdown) {
+        switch (event) {
+            case 'mouseenter':
+                this.target = dropdown.dataset.dropdown
+                break
+        
+            case 'mouseleave':
+                const ddop = find(`[data-dropdown="${dropdown.dataset.dropdown}"] [data-open-dropdown]`)
+                if (ddop)  {
+                    const includeDropdown = find(`[data-dropdown="${ddop.dataset.openDropdown}"]`)
+                    if(includeDropdown.classList.contains('dropdownActive')) return
+                }
+                
+                this.target = null
+                this.multilvlHide(parent, dropdown)
+                break
+        }
+    }
 }
