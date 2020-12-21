@@ -82,14 +82,21 @@ class Grid {
         this.fileOffsetX = 20;
         this.fileOffsetY = 7;
 
+        //calculation grid size with considering offsets (-1 stands for file)
         this.width = Math.floor(this.desktop.offsetWidth / (this.filesize.offsetWidth + this.fileOffsetX)) - 1
         this.height = Math.floor(this.desktop.offsetHeight / (this.filesize.offsetHeight + this.fileOffsetY)) - 1
+
+        //indents from screen boundaries. Using spare file and remainder after division of expression above
         this.screenOffsetX = this.filesize.offsetWidth + (this.desktop.offsetWidth % (this.filesize.offsetWidth + this.fileOffsetX))
         this.screenOffsetY = this.filesize.offsetHeight + (this.desktop.offsetHeight % (this.filesize.offsetHeight + this.fileOffsetY))
         
         // console.log(this.width, this.height); baka senpai
         this.data = new Array(this.width * this.height)
         for (let i = 0; i < this.data.length; i++) {
+            /** 
+            * In one-dimentional array X always represents as "X mod width" due to looping 0-width values.
+            * Y represents as float value until reached "width", thus on every row it's increments.
+            */
             let x = ((i % this.width) * this.filesize.offsetWidth) + (this.screenOffsetX / 2) + ((i % this.width) * this.fileOffsetX) + this.fileOffsetX
             let y = Math.floor(i / this.width) * this.filesize.offsetHeight + (this.screenOffsetY / 2) + (Math.floor(i / this.width) * this.fileOffsetY) + this.fileOffsetY
             this.data[i] = { posX: x, posY: y, occupied: false }
@@ -102,11 +109,13 @@ class Grid {
     }
 
     nodeFromPoint(x, y) {
-        let percentX = ((x + (this.filesize.offsetWidth / 2)) / this.desktop.offsetWidth)
-        let percentY = ((y + (this.filesize.offsetHeight / 2)) / this.desktop.offsetHeight)
+        //unity-based normalization
+        //https://en.wikipedia.org/wiki/Feature_scaling 
+        let percentX = (x / this.desktop.offsetWidth)
+        let percentY = (y / this.desktop.offsetHeight)
         
-        let arrayX = Math.floor(this.width * percentX)
-        let arrayY = Math.floor(this.height * percentY)
+        let arrayX = Math.round(this.width * percentX)
+        let arrayY = Math.round(this.height * percentY)
 
         return this.data[arrayX + arrayY * this.width]
     }
