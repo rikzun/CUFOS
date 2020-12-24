@@ -122,13 +122,7 @@ class Grid {
     nodeFromPoint(x, y) {
         let vec2 = [x, y]
         vec2 = this.checkCoordinates(vec2[0], vec2[1])
-        //unity-based normalization
-        //https://en.wikipedia.org/wiki/Feature_scaling 
-        let percentX = (vec2[0] / this.desktop.offsetWidth)
-        let percentY = (vec2[1] / this.desktop.offsetHeight)
         
-        /* let arrayX = Math.round((this.width - 1) * percentX)
-        let arrayY = Math.round((this.height - 1) * percentY) */
         let arrayX = Math.floor(vec2[0] / (this.filesize.offsetWidth + this.fileOffsetX))
         let arrayY = Math.floor(vec2[1] / (this.filesize.offsetHeight + this.fileOffsetY))
 
