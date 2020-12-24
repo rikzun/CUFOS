@@ -79,16 +79,16 @@ class Grid {
         this.desktop = desk
         this.filesize = file
 
-        this.fileOffsetX = 20;
-        this.fileOffsetY = 7;
+        this.fileOffsetX = 10;
+        this.fileOffsetY = 5;
 
-        //calculation grid size with considering offsets (-1 stands for file)
-        this.width = Math.floor(this.desktop.offsetWidth / (this.filesize.offsetWidth + this.fileOffsetX)) - 1
-        this.height = Math.floor(this.desktop.offsetHeight / (this.filesize.offsetHeight + this.fileOffsetY)) - 1
+        //calculation grid size with considering offsets
+        this.width = Math.floor(this.desktop.offsetWidth / (this.filesize.offsetWidth + this.fileOffsetX))
+        this.height = Math.floor(this.desktop.offsetHeight / (this.filesize.offsetHeight + this.fileOffsetY))
 
-        //indents from screen boundaries. Using spare file and remainder after division of expression above
-        this.screenOffsetX = this.filesize.offsetWidth + (this.desktop.offsetWidth % (this.filesize.offsetWidth + this.fileOffsetX))
-        this.screenOffsetY = this.filesize.offsetHeight + (this.desktop.offsetHeight % (this.filesize.offsetHeight + this.fileOffsetY))
+        //indents from screen boundaries. Using remainder after division of expression above
+        this.screenOffsetX = (this.desktop.offsetWidth % (this.filesize.offsetWidth + this.fileOffsetX))
+        this.screenOffsetY = (this.desktop.offsetHeight % (this.filesize.offsetHeight + this.fileOffsetY))
         
         // console.log(this.width, this.height); baka senpai
         this.data = new Array(this.width * this.height)
@@ -99,36 +99,49 @@ class Grid {
             */
             let x = ((i % this.width) * this.filesize.offsetWidth) + (this.screenOffsetX / 2) + ((i % this.width) * this.fileOffsetX) + this.fileOffsetX
             let y = Math.floor(i / this.width) * this.filesize.offsetHeight + (this.screenOffsetY / 2) + (Math.floor(i / this.width) * this.fileOffsetY) + this.fileOffsetY
-            this.data[i] = { posX: x, posY: y, occupied: false }
+            this.data[i] = { posX: x, posY: y, occupied: false, i: i }
             //createNewFile(y, x, i + 1, this.desktop)
+        }
+
+        for (const node of findAll('.desktopFile')) {
+            const posOnGrid = this.nodeFromPoint(node.offsetLeft, node.offsetTop)
+            this.setOccupied(posOnGrid)
+            node.style.top = vh(posOnGrid.posY)
+            node.style.left = vw(posOnGrid.posX)
         }
     }
 
     checkCoordinates(x, y) {
-        // TODO
+        let clampedX = x
+        let clampedY = y
+        if (clampedX + this.filesize.offsetWidth > this.desktop.offsetWidth) clampedX = this.desktop.offsetWidth
+        if (clampedY + this.filesize.offsetHeight > this.desktop.offsetHeight) clampedY = this.desktop.offsetHeight
+        return [clampedX, clampedY]
     }
 
     nodeFromPoint(x, y) {
+        let vec2 = [x, y]
+        vec2 = this.checkCoordinates(vec2[0], vec2[1])
         //unity-based normalization
         //https://en.wikipedia.org/wiki/Feature_scaling 
-        let percentX = (x / this.desktop.offsetWidth)
-        let percentY = (y / this.desktop.offsetHeight)
+        let percentX = (vec2[0] / this.desktop.offsetWidth)
+        let percentY = (vec2[1] / this.desktop.offsetHeight)
         
-        let arrayX = Math.round(this.width * percentX)
-        let arrayY = Math.round(this.height * percentY)
+        /* let arrayX = Math.round((this.width - 1) * percentX)
+        let arrayY = Math.round((this.height - 1) * percentY) */
+        let arrayX = Math.floor(vec2[0] / (this.filesize.offsetWidth + this.fileOffsetX))
+        let arrayY = Math.floor(vec2[1] / (this.filesize.offsetHeight + this.fileOffsetY))
 
         return this.data[arrayX + arrayY * this.width]
     }
 
-    /* get(x, y) {
-        this.checkCoordinates(x, y)
-        return this.data[x + y * this.width]
+    setOccupied(node) {
+        this.data[node.i].occupied = true
     }
 
-    set(x, y, value) {
-        this.checkCoordinates(x, y)
-        this.data[x + y * this.width] = value
-    } */
+    setUnoccupied(node) {
+        this.data[node.i].occupied = false
+    }
 }
 
 function createNewFile (top, left, name, desktop) {

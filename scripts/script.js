@@ -89,7 +89,16 @@ $(() => {
             data.switches.draggableWinIcon = true
         },
         stop: async (event, ui) => {
-            const posOnGrid = data.grid.nodeFromPoint(ui.position.left, ui.position.top)
+            const posOnGrid = data.grid.nodeFromPoint(ui.offset.left, ui.offset.top)
+            if (posOnGrid.occupied) {
+                posOnGrid.posX = ui.originalPosition.left
+                posOnGrid.posY = ui.originalPosition.top
+            } else {
+                const oldPosOnGrid = data.grid.nodeFromPoint(ui.originalPosition.left, ui.originalPosition.top)
+                data.grid.setOccupied(posOnGrid)
+                data.grid.setUnoccupied(oldPosOnGrid)
+            }
+            
             event.target.style.top = vh(posOnGrid.posY)
             event.target.style.left = vw(posOnGrid.posX)
 
