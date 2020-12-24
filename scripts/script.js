@@ -107,6 +107,14 @@ $(() => {
         }
     })
 
+    //recreate grid on window resize
+    $(window).resize(() => {
+        clearTimeout(window.onResizeFinished);
+        window.onResizeFinished = setTimeout(() => {
+            data.grid = new Grid(find('.desktop'), find('.desktopFile'))
+        }, 300)
+    })
+
     //change cursor style
     $('.desktopFile').hover((eventIn) => {
         if(eventIn.handleObj.origType !== 'mouseenter') return

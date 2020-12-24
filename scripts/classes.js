@@ -90,7 +90,7 @@ class Grid {
         this.screenOffsetX = (this.desktop.offsetWidth % (this.filesize.offsetWidth + this.fileOffsetX))
         this.screenOffsetY = (this.desktop.offsetHeight % (this.filesize.offsetHeight + this.fileOffsetY))
         
-        // console.log(this.width, this.height); baka senpai
+        // console.log(this.width, this.height)
         this.data = new Array(this.width * this.height)
         for (let i = 0; i < this.data.length; i++) {
             /** 
