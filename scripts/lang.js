@@ -4,6 +4,13 @@ const translateStrings = {
     'SYSTEM': {en: 'System', ru: 'Система'},
     'PC': {en: 'PC', ru: 'ПК'},
     'CHANGE_LANG': {en: 'Change lang', ru: 'Изменить язык'},
+
+
+
+    'CHANGE_LANG_LIST': {en: 'System language:', ru: 'Язык системы:'},
+
+
+    
     'WEEKDAY1': {en: 'Mon', ru: 'Пн'},
     'WEEKDAY2': {en: 'Tue', ru: 'Вт'},
     'WEEKDAY3': {en: 'Wed', ru: 'Ср'},

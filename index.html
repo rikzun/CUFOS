@@ -174,6 +174,7 @@
                 <div class="windowButton buttonClose"></div>
             </div>
         </div>
+        <!--
         <div class="windowContent">
             <div style="display: flex;">
                 <p data-default-string="CHANGE_LANG"></p> - <div id="change_lang">CLICK</div>
@@ -185,6 +186,24 @@
                 <p data-default-string="CHANGE_CLICK_DOUBLE"></p> - <div id="change_click_double">CLICK</div>
             </div>
         </div>
+    -->
+    <div class="windowContent">
+    <div style="display: flex;">
+        <p>Открытие приложений:</p>
+    </div>
+    <div style="display: flex;">
+        <p>Двойной клик</p><div class="whitespace"> - </div><div id="change_click_double"><input type="radio" name="radio" value="1" checked=""></div>
+    </div>
+    <div style="display: flex;">
+        <p>Одинарный</p><div class="whitespace"> - </div><div id="change_click_single"><input type="radio" name="radio" value="2" checked=""></div>
+    </div>
+    <div style="display: flex;">
+            <p data-default-string="CHANGE_LANG_LIST"></p><div class="whitespace"></div>
+            <select class="select-setting">
+                <option selected="selected" value="1">English</option>
+                <option selected="selected" value="2">Русский</option>
+            </select>
+    </div>
     </div>
     <!-- windows end -->
 </body>
