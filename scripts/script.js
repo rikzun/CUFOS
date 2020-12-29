@@ -4,32 +4,44 @@ const data = {
     },
     switches: {
         draggableWinIcon: false,
-        selectedFile: false,
-        activeDropdown: false
+        selectedFile: false
     },
-    fileController: new FilesController(localStorage.clickDelay),
+    fileController: new FileController(),
     grid: new Grid(find('.desktop'), find('.desktopFile')),
     selectionBox: new SelectionBox(find('.selectionBox')),
-    ddController: new DropdownController()
+    ddController: new DropdownController(),
+    ctxmController: new ContextmenuController(find('.ctxm'))
 }
 
 function changeLang(lang) {
-    for (const node of findAll('p[data-default-string]')) {
-        const key = node.dataset.defaultString
-        if (!translateStrings.hasOwnProperty(key)) { node.textContent = key; continue }
-        node.textContent = translate(key)
+    const missingKeys = new Set()
+    const usedKeys = new Set()
+
+    for (const node of findAll('[data-key]')) {
+        const key = node.dataset.key
+
+        const translated = translate(key)
+        if (translated === key) {
+            missingKeys.add(key)
+        } else { usedKeys.add(key) }
+
+        node.textContent = translated
     }
+
+    const unusedKeys = new Set(Object.keys(translateStrings).filter(el => !usedKeys.has(el)))
+    const days = ['WEEKDAY1', 'WEEKDAY2', 'WEEKDAY3', 'WEEKDAY4', 'WEEKDAY5', 'WEEKDAY6', 'WEEKDAY0']
+    for (const day of days) { unusedKeys.delete(day) }
+    
+    console.log(missingKeys.size + ' missing keys')
+    console.log([...missingKeys])
+    console.log(unusedKeys.size + ' unused keys')
+    console.log([...unusedKeys])
 }
 
 $(() => {
 //----------
 //  global
 //----------
-    //off contextmenu
-    $('body').bind('contextmenu', (event) => {
-        return false
-    })
-
     //replace keys to string
     changeLang(localStorage.currentLang)
 
@@ -39,7 +51,7 @@ $(() => {
     }
 
     //change lang func
-    $('#change_lang').click(() => {
+    $('#change_lang').mousedown(() => {
         switch (localStorage.currentLang) {
             case 'en':
                 localStorage.currentLang = 'ru'
@@ -53,11 +65,11 @@ $(() => {
         }
     })
 
-    $('#change_click_single').click(() => {
+    $('#change_click_single').mousedown(() => {
         localStorage.openClick = 'single'
     })
 
-    $('#change_click_double').click(() => {
+    $('#change_click_double').mousedown(() => {
         localStorage.openClick = 'double'
     })
 
@@ -150,7 +162,12 @@ $(() => {
         }
     })
     .resizable({
-        handles: 'all'
+        handles: 'all',
+        stop: (event, ui) => {
+            event.target
+                .addStyle('height', vh(ui.size.height))
+                .addStyle('width', vw(ui.size.width))
+        }
     })
 
     //close window button
@@ -160,7 +177,7 @@ $(() => {
             window = window.parentElement
             if (window.classList.contains('window') && window.id) break
         }
-        window.addStyle('display', 'none')
+        $(window).removeAttr('style')
     })
 
 //----------
@@ -191,7 +208,8 @@ $(() => {
 //  dropdowns
 //-------------
     $('.taskbarElement[data-open-dropdown]')
-    .click((event) => {
+    .mousedown((event) => {
+        if (event.buttons !== 1) return
         const parent = event.currentTarget
         const dropdown = find(`[data-dropdown="${parent.dataset.openDropdown}"]`)
 
@@ -207,30 +225,25 @@ $(() => {
         data.ddController.hover(parent, dropdown)
     })
 
-    $('.dropdown-item[data-open-dropdown]').hover((event) => {
-        const parent = event.currentTarget
-        const dropdown = find(`[data-dropdown="${parent.dataset.openDropdown}"]`)
-
-        switch (event.handleObj.origType) {
-            case 'mouseenter':
-                data.ddController.multilvlShow(parent, dropdown)
-                break
-
-            case 'mouseleave':
-                data.ddController.multilvlHide(parent, dropdown)
-                break
-        }
-    })
-
-    $('.dropdown[data-dropdown-type="multilevel"]').hover((event) => {
-        const parent = event.currentTarget
-        const dropdown = find(`[data-dropdown="${parent.dataset.dropdown}"]`)
-
-        data.ddController.multilvlHover(event.handleObj.origType, parent, dropdown)
-    })
-
-    $('body').click(() => {
+    $('body').mousedown(async(event) => {
+        if (event.buttons !== 1) return
         if (!data.ddController.close) return
         data.ddController.hide(true)
+    })
+
+//---------------
+//  contextmenu
+//---------------
+    $('body').bind('contextmenu', () => { return false })
+
+    $('[data-ctxm-type]').mousedown((event) => {
+        if (event.buttons !== 2) return
+
+        data.ctxmController.click(event)
+    })
+
+    $('body').mousedown((event) => {
+        if (event.buttons !== 1) return
+        data.ctxmController.hide()
     })
 })

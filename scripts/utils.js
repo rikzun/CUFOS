@@ -6,6 +6,7 @@ function calculateRelativeUnits(px, direction) {
 }
 
 function translate(key) {
+    if (!translateStrings.hasOwnProperty(key)) return key
     return translateStrings[key][localStorage.getItem('currentLang')]
 }
 

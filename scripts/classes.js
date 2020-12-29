@@ -2,9 +2,9 @@
 // Classes -- WARNING!! REFACTORING ZONE!! TOO MUCH WET CODE!!
 //-------------------------------------------------------------
 
-class FilesController {
+class FileController {
     constructor() {
-        this.delay = 700
+        this.delay = 200
         this.clicks = 0
         this.timer = null
         this.target = null
@@ -40,7 +40,7 @@ class FilesController {
         } else if (targetApp === this.target) {
             clearTimeout(this.timer)
             $('body').click()
-            $(targetApp.dataset.openApp).show()
+            find(targetApp.dataset.openApp).addStyle('display', 'flex')
             this.resetFields()
         } else {
             clearTimeout(this.timer)
@@ -53,7 +53,7 @@ class FilesController {
         this.clicks++
         this.target = targetApp
         this.timer = setTimeout(() => {
-            $(targetApp.dataset.openApp).show()
+            find(targetApp.dataset.openApp).addStyle('display', 'flex')
             this.resetFields()
         }, this.delay)
     }
@@ -200,7 +200,6 @@ class DropdownController {
         this.parent = null
         this.hoverMode = false
         this.close = false
-        this.target = null
     }
 
     checkOverflow(left) {
@@ -211,12 +210,7 @@ class DropdownController {
     }
 
     click(parent, dropdown) {
-        if (this.dropdown == dropdown && this.parent == parent) { 
-            this.hide()
-            this.hoverMode = false
-            this.close = false
-            return
-        }
+        if (this.dropdown == dropdown && this.parent == parent) { this.hide(true); return }
         if (this.dropdown !== null) this.hide()
 
         this.dropdown = dropdown
@@ -225,14 +219,12 @@ class DropdownController {
         this.show()
     }
 
-    async show(multilvl) {
+    async show() {
         this.dropdown.classList.add('dropdownActive')
         this.parent.classList.add('taskbarElementActive')
 
         let top = find('.taskbar').getBoundingClientRect().bottom + 'px'
         let left
-
-        if (multilvl) top = this.parent.getBoundingClientRect().top - getComputedStyle(find('.dropdown')).padding.split(' ')[0].replace('px', '') - 1
 
         switch (this.parent.dataset.dropdownAlign) {
             case 'left':
@@ -256,8 +248,8 @@ class DropdownController {
         this.close = true
     }
 
-    hide(click) {
-        if (click) {
+    hide(force) {
+        if (force) {
             for (const dropdown of findAll('[data-dropdown].dropdownActive')) {
                 dropdown.classList.remove('dropdownActive')
             }
@@ -271,7 +263,7 @@ class DropdownController {
         
         this.dropdown = null
         this.parent = null
-        if (click) {
+        if (force) {
             this.hoverMode = false
             this.close = false
         }
@@ -284,38 +276,72 @@ class DropdownController {
         this.parent = parent
         this.show()
     }
+}
 
-    multilvlShow(parent, dropdown) {
-        this.dropdown = dropdown
-        this.parent = parent
-        this.show(true)
-    }
+class ContextmenuController {
+    constructor(node) {
+        this.node = node
+        this.clicked = false
 
-    async multilvlHide(parent, dropdown) {
-        await wait(100)
-        if (this.target == dropdown.dataset.dropdown) return
-
-        this.dropdown = dropdown
-        this.parent = parent
-        this.hide()
-    }
-
-    multilvlHover(event, parent, dropdown) {
-        switch (event) {
-            case 'mouseenter':
-                this.target = dropdown.dataset.dropdown
-                break
-        
-            case 'mouseleave':
-                const ddop = find(`[data-dropdown="${dropdown.dataset.dropdown}"] [data-open-dropdown]`)
-                if (ddop)  {
-                    const includeDropdown = find(`[data-dropdown="${ddop.dataset.openDropdown}"]`)
-                    if(includeDropdown.classList.contains('dropdownActive')) return
-                }
-                
-                this.target = null
-                this.multilvlHide(parent, dropdown)
-                break
+        this.types = {
+            'file': [
+                {icon: 'fas fa-hammer', key: 'kekw'},
+                {separator: true},
+                {icon: 'fas fa-hammer', key: 'idk'}
+            ]
         }
+    }
+
+    async click(event) {
+        if (this.clicked) return
+        this.clicked = true
+
+        this.hide()
+        this.build(event.currentTarget.dataset.ctxmType)
+        
+        this.node
+            .addStyle('display', 'flex')
+            .addStyle('top', vh(event.pageY))
+            .addStyle('left', vw(event.pageX))
+
+        await wait(50)
+        this.clicked = false
+    }
+
+    build(ctxmType) {
+        for (const item of this.types[ctxmType]) {
+            const Node = document.createElement('a')
+
+            for (const [key, value] of Object.entries(item)) {
+                switch (key) {
+                    case 'separator':
+                        Node.classList.add('dropdown-separator')
+                        break
+
+                    case 'icon': 
+                        const Icon = document.createElement('i')
+                        Icon.classList.value = value
+
+                        Node.appendChild(Icon)
+                        Node.classList.add('ctxm-item')
+                        break
+
+                    case 'key':
+                        const Text = document.createElement('p')
+                        Text.textContent = value
+
+                        Node.appendChild(Text)
+                        Node.classList.add('ctxm-item')
+                        break
+                }
+            }
+
+            this.node.appendChild(Node)
+        }
+    }
+
+    hide() {
+        $(this.node).removeAttr('style')
+        this.node.replaceChildren()
     }
 }

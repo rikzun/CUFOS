@@ -1,16 +1,8 @@
 const translateStrings = {
-    'TITLE1': {en: 'Title 1', ru: 'Заголовок 1'},
-    'CONTENT': {en: 'Content', ru: 'Содержание'}, 
-    'SYSTEM': {en: 'System', ru: 'Система'},
-    'PC': {en: 'PC', ru: 'ПК'},
+    'TITLE': {en: 'Title', ru: 'Заголовок'},
+    'CONTENT': {en: 'Content', ru: 'Содержание'},
+    'LIST': {en: 'List', ru: 'Список'},
     'CHANGE_LANG': {en: 'Change lang', ru: 'Изменить язык'},
-
-
-
-    'CHANGE_LANG_LIST': {en: 'System language:', ru: 'Язык системы:'},
-
-
-    
     'WEEKDAY1': {en: 'Mon', ru: 'Пн'},
     'WEEKDAY2': {en: 'Tue', ru: 'Вт'},
     'WEEKDAY3': {en: 'Wed', ru: 'Ср'},
