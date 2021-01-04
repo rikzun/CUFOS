@@ -152,9 +152,8 @@ p {
     overflow: hidden;
     background-color: #2d2d2d;
     border: #5c5c5c 0.1vh solid;
-    /* box-shadow: black 0px 0px 2vh 0.1vh; */
-    left: 50%;
-    top: 50%;
+    left: 10%;
+    top: 40%;
     flex-direction: column;
 }
 .windowNavbar {

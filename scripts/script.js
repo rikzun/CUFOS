@@ -1,41 +1,10 @@
-const data = {
-    mouse: {
-        start: {},
-    },
-    switches: {
-        draggableWinIcon: false,
-        selectedFile: false
-    },
-    fileController: new FileController(),
-    grid: new Grid(find('.desktop'), find('.desktopFile')),
-    selectionBox: new SelectionBox(find('.selectionBox')),
-    ddController: new DropdownController(),
-    ctxmController: new ContextmenuController(find('.ctxm'))
-}
-
 function changeLang(lang) {
-    const missingKeys = new Set()
-    const usedKeys = new Set()
-
     for (const node of findAll('[data-key]')) {
         const key = node.dataset.key
 
         const translated = translate(key)
-        if (translated === key) {
-            missingKeys.add(key)
-        } else { usedKeys.add(key) }
-
         node.textContent = translated
     }
-
-    const unusedKeys = new Set(Object.keys(translateStrings).filter(el => !usedKeys.has(el)))
-    const days = ['WEEKDAY1', 'WEEKDAY2', 'WEEKDAY3', 'WEEKDAY4', 'WEEKDAY5', 'WEEKDAY6', 'WEEKDAY0']
-    for (const day of days) { unusedKeys.delete(day) }
-    
-    console.log(missingKeys.size + ' missing keys')
-    console.log([...missingKeys])
-    console.log(unusedKeys.size + ' unused keys')
-    console.log([...unusedKeys])
 }
 
 $(() => {
@@ -46,8 +15,9 @@ $(() => {
     changeLang(localStorage.currentLang)
 
     //gen id
-    for (const node of findAll('#gen', true)) {
-        node.id = '_' + Math.random().toString(36).substr(2, 9)
+    for (const node of findAll('[data-id]')) {
+        node.id = genID()
+        delete node.dataset.id
     }
 
     //change lang func
@@ -144,40 +114,6 @@ $(() => {
         if(data.fileController.selectionOneClickTimer) {
             clearTimeout(data.fileController.selectionOneClickTimer)
         }
-    })
-
-//-----------
-//  windows
-//-----------
-    //move and resize window
-    $('.window').draggable({
-        cursor: 'default',
-        cancel: '.windowTitleButtons',
-        handle: 'div[data-handler]',
-        start: (event) => {},
-        stop: (event, ui) => {
-            event.target
-                .addStyle('top', vh(ui.position.top))
-                .addStyle('left', vw(ui.position.left))
-        }
-    })
-    .resizable({
-        handles: 'all',
-        stop: (event, ui) => {
-            event.target
-                .addStyle('height', vh(ui.size.height))
-                .addStyle('width', vw(ui.size.width))
-        }
-    })
-
-    //close window button
-    $("div.buttonClose").click((event) => {
-        let window = event.currentTarget
-        for (let i = 0; i < 5; i++) {
-            window = window.parentElement
-            if (window.classList.contains('window') && window.id) break
-        }
-        $(window).removeAttr('style')
     })
 
 //----------

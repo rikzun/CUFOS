@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="./styles/vendors/jquery-ui.css">
     <link rel="stylesheet" href="./styles/vendors/pro.min.css">
     <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/sizes.css">
     <meta charset="utf-8">
     <title>CUFOS</title>
     <meta name="description" content="Concept of a User-Friendly Operating System">
@@ -13,8 +12,6 @@
 
 <body>
     <div class="display">
-
-        <!-- upper taskbar -->
         <div class="taskbar">
             <div class="taskbarItems">
                 <div class="taskbarElement"><i class="fas fa-expand"></i></div>
@@ -27,25 +24,19 @@
                 <div class="taskbarElement"><p id="taskbarClock"></p></div>
             </div>
         </div>
-        <!-- upper taskbar end -->
 
-        <!-- desktop -->
         <div class="desktop">
             <div class="selectionBox"></div>
 
-            <div data-ctxm-type="file" class="desktopFile" id="gen" data-open-app="#defaultWin" style="left: 15vw; top: 30vh">
+            <div data-ctxm-type="file" class="desktopFile" data-id data-open-app="defaultWin" style="left: 15vw; top: 30vh">
                 <i class="desktopFileIcon fas fa-file-alt"></i>
                 <div class="desktopFileTitle">unknown</div>
             </div>
         </div>
-        <!-- desktop end -->
 
-        <!-- lower taskbar -->
         <div class="taskbar lowerTaskbar">
             <i class="fas fa-expand"></i>
         </div>
-        <!-- lower taskbar end -->
-
     </div>
 
     <!-- dropdowns -->
@@ -87,27 +78,8 @@
     </div>
     <!-- dropdowns end -->
 
-    <!-- windows -->
-    <div class="window default-size" id="defaultWin">
-        <div class="windowNavbar" data-handler>
-            <div class="windowTitle">
-                <p data-key="TITLE"></p>
-            </div>
-            <div class="windowButtons">
-                <div class="windowButton buttonMinimize"></div>
-                <div class="windowButton buttonMaximize"></div>
-                <div class="windowButton buttonClose"></div>
-            </div>
-        </div>
-        <div class="windowContent">
-            <p data-key="CONTENT"></p>
-        </div>
-    </div>
-    <!-- windows end -->
-
-    <!-- contextmenu -->
+    <div id="windows"></div>
     <div class="ctxm"></div>
-    <!-- contextmenu end -->
 
 </body>
 <script src="./scripts/vendors/jquery-3.5.1.js"></script>
@@ -116,6 +88,6 @@
 <script src="./scripts/utils.js"></script>
 <script src="./scripts/defaultSettings.js"></script>
 <script src="./scripts/classes.js"></script>
+<script src="./scripts/data.js"></script>
 <script src="./scripts/script.js"></script>
-
 </html>

@@ -63,3 +63,13 @@ function vh(px) {
 function vw(px) {
     return (String(px).replace('px', '') / window.innerWidth) * 100 + 'vw'
 }
+
+function stringToElement(string) {
+    const template = document.createElement('template')
+    template.innerHTML = string
+    return template.content.firstElementChild
+}
+
+function genID() {
+    return '_' + Math.random().toString(36).substr(2, 9)
+}

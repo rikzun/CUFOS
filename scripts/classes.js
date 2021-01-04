@@ -40,7 +40,7 @@ class FileController {
         } else if (targetApp === this.target) {
             clearTimeout(this.timer)
             $('body').click()
-            find(targetApp.dataset.openApp).addStyle('display', 'flex')
+            data.windowsController.open(targetApp.dataset.openApp)
             this.resetFields()
         } else {
             clearTimeout(this.timer)
@@ -53,7 +53,7 @@ class FileController {
         this.clicks++
         this.target = targetApp
         this.timer = setTimeout(() => {
-            find(targetApp.dataset.openApp).addStyle('display', 'flex')
+            data.windowsController.open(targetApp.dataset.openApp)
             this.resetFields()
         }, this.delay)
     }
@@ -75,9 +75,9 @@ class FileController {
 
 class Grid {
 
-    constructor(desk, file) {
-        this.desktop = desk
-        this.filesize = file
+    constructor() {
+        this.desktop = find('.desktop')
+        this.filesize = find('.desktopFile')
 
         this.fileOffsetX = 10;
         this.fileOffsetY = 5;
@@ -100,7 +100,7 @@ class Grid {
             let x = ((i % this.width) * this.filesize.offsetWidth) + (this.screenOffsetX / 2) + ((i % this.width) * this.fileOffsetX) + this.fileOffsetX
             let y = Math.floor(i / this.width) * this.filesize.offsetHeight + (this.screenOffsetY / 2) + (Math.floor(i / this.width) * this.fileOffsetY) + this.fileOffsetY
             this.data[i] = { posX: x, posY: y, occupied: false, i: i }
-            //createNewFile(y, x, i + 1, this.desktop)
+            // createNewFile(y, x, i + 1, this.desktop)
         }
 
         for (const node of findAll('.desktopFile')) {
@@ -157,8 +157,8 @@ function createNewFile (top, left, name, desktop) {
 }
 
 class SelectionBox {
-    constructor(node) {
-        this.target = node
+    constructor() {
+        this.target = find('.selectionBox')
         this.top = null
         this.left = null
     }
@@ -279,8 +279,8 @@ class DropdownController {
 }
 
 class ContextmenuController {
-    constructor(node) {
-        this.node = node
+    constructor() {
+        this.node = find('.ctxm')
         this.clicked = false
 
         this.types = {
@@ -343,5 +343,72 @@ class ContextmenuController {
     hide() {
         $(this.node).removeAttr('style')
         this.node.replaceChildren()
+    }
+}
+
+class WindowsController {
+    constructor() {
+        this.place = find('#windows')
+        this.ltaskbar = find('.lowerTaskbar')
+
+        this.winID = null
+    }
+
+    open(winID) {
+        this.winID = winID
+
+        const node = this.build()
+        if (!node) return false
+
+        this.spawn(node)
+    }
+
+    build() {
+        if (!windows.hasOwnProperty(this.winID)) return
+        const dataWin = windows[this.winID]
+        if(dataWin.once && find(`[data-app-id="${this.winID}"]`)) return
+
+        const html = `
+        <div class="window" id="${genID()}" data-app-id="${this.winID}">
+            <div class="windowNavbar" data-handler>
+                <div class="windowTitle">${translate(dataWin.title)}</div>
+                <div class="windowButtons">
+                    <div class="windowButton buttonMinimize"></div>
+                    <div class="windowButton buttonMaximize"></div>
+                    <div class="windowButton buttonClose"></div>
+                </div>
+            </div>
+            <div class="windowContent">${dataWin.html}</div>
+        </div>`
+        
+        return stringToElement(html)
+    }
+
+    spawn(node) {
+        const dataWin = windows[this.winID]
+        node
+            .addStyle('display', 'flex')
+            .addStyle('height', dataWin.minHeight + 'px')
+            .addStyle('width', dataWin.minWidth + 'px')
+
+        this.place.appendChild(node)
+
+        $(node).draggable({
+            cursor: 'default',
+            cancel: '.windowTitleButtons',
+            handle: 'div[data-handler]'
+        })
+        .resizable({
+            handles: 'all',
+            maxHeight: dataWin.maxHeight,
+            maxWidth: dataWin.maxWidth,
+            minHeight: dataWin.minHeight,
+            minWidth: dataWin.minWidth,
+        })
+
+        $(`#${node.id} .buttonClose`).click((event) => {
+            this.place.removeChild(node)
+            $(`#${node.id} .buttonClose`).off()
+        })
     }
 }
