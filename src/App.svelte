@@ -1,17 +1,16 @@
 <script lang="ts">
+import Display from "./core/display/Display.svelte"
+
 </script>
 
 <template>
+    <Display />
 </template>
 
 <style lang="sass" global>
     @import url("https://fonts.googleapis.com/css2?family=Material+Icons")
 
     body
-        display: flex
-        align-items: center
-        justify-content: center
-
         margin: 0
         width: 100vw
         height: 100vh

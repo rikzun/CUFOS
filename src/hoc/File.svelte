@@ -15,4 +15,14 @@
 </template>
 
 <style lang="sass">
+    .file-container
+        display: flex
+        flex-direction: column
+        align-items: center
+
+        width: 80px
+        height: 80px
+
+        background-color: rgb(0 0 0 / 32%)
+        border: 1px solid rgb(255 255 255 / 18%)
 </style>
