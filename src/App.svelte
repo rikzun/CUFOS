@@ -15,6 +15,8 @@ import Display from "./core/display/Display.svelte"
         width: 100vw
         height: 100vh
 
+        overflow: hidden
+
         background-image: url('https://palscity.ams3.cdn.digitaloceanspaces.com/upload/photos/2021/08/fVooSsgnWxS7uRJatGn7_19_b1ca2d4a591d79191715b66af54ddf3a_image.jpg?cache=0')
         background-position: center
         background-repeat: no-repeat

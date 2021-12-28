@@ -1,52 +1,41 @@
 <script lang="ts">
-    import type { FileEXT } from "src/types/fs"
     import Icon from "../components/Icon.svelte"
-    import {MouseEventType} from "../types/mouse";
 
     export let icon: string
     export let name: string
-    export let ext: FileEXT
 
-    let selected = false
-    let hovered = false
+    export let top: number
+    export let left: number
 
-    const FileService = {
-        clickCount: 0,
-        onClick: false,
+    let startTop: number | null = null
+    let startLeft: number | null = null
 
-        mouseHandler: (type: MouseEventType, e: MouseEvent) => {
-            switch (type) {
-                case MouseEventType.HOVER: hovered = true; break
-                case MouseEventType.LEAVE: hovered = false; break
-                case MouseEventType.DOWN: {
-                    FileService.onClick = true
-                    break
-                }
-                case MouseEventType.UP: {
-                    if (!FileService.onClick) return
-                    FileService.onClick = false
-                    FileService.clickCount++
+    function mousedown(e: MouseEvent) {
+        startTop = e.clientY
+        startLeft = e.clientX
+    }
 
-                    if (FileService.clickCount == 2) {
-                        FileService.clickCount = 0
-                        selected = true
-                    }
-                    break
-                }
-            }
-        }
+    function mouseup() {
+        startTop = null
+        startLeft = null
+    }
+
+    function mousemove(e: MouseEvent) {
+        if (startTop == null || startLeft == null) return
+        top = e.clientY - startTop
+        left = e.clientX - startLeft
     }
 </script>
 
 <template>
-    <div
-        class="file-block"
-        class:selected
-        class:hovered
-        on:mouseenter={(e) => FileService.mouseHandler(MouseEventType.HOVER, e)}
-        on:mouseleave={(e) => FileService.mouseHandler(MouseEventType.LEAVE, e)}
-        on:mousedown={(e) => FileService.mouseHandler(MouseEventType.DOWN, e)}
-        on:mouseup={(e) => FileService.mouseHandler(MouseEventType.UP, e)}
+    <svelte:window
+        on:mousemove={mousemove}
+        on:mouseup={mouseup}
+    />
+
+    <div class="file-block"
+        on:mousedown={mousedown}
+        style={`top: ${top}px; left: ${left}px`}
     >
         <div class="icon">
             <Icon icon={icon} size="46px" />
@@ -57,6 +46,7 @@
 
 <style lang="sass">
     .file-block
+        position: absolute
         display: flex
         flex-direction: column
         align-items: center

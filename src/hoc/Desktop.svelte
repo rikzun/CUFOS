@@ -7,7 +7,8 @@ import File from "./File.svelte";
         <File
             icon="settings"
             name="Настройки"
-            ext="exe"
+            top={50}
+            left={50}
         />
     </div>
 </template>

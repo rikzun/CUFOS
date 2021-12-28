@@ -9,7 +9,7 @@
 
 <style lang="sass">
     .toolbar-app
-        height: 36px
+        height: 30px
         background-color: rgb(0 0 0 / 31%)
         border-bottom: 1px solid rgb(255 255 255 / 18%)
 </style>

@@ -1,1 +1,0 @@
-export enum MouseEventType { HOVER, LEAVE, DOWN, UP }
