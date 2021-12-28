@@ -19,4 +19,7 @@ import Display from "./core/display/Display.svelte"
         background-position: center
         background-repeat: no-repeat
         background-size: cover
+
+    *
+        box-sizing: border-box
 </style>

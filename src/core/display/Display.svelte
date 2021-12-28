@@ -15,4 +15,6 @@ import Desktop from "../../hoc/Desktop.svelte"
     .display
         display: flex
         flex-direction: column
+
+        height: 100%
 </style>

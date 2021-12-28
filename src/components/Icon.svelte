@@ -1,11 +1,13 @@
 <script lang="ts">
-    import { css } from "../utils/functions";
-
     export let icon: string
+    export let size: string
 </script>
 
 <template>
-    <span class="material-icons{css($$props.class)}">
+    <span
+        class="material-icons{$$props.class ? ' ' + $$props.class : ''}"
+        style={size != null ? `font-size: ${size}` : undefined}
+    >
         {icon}
     </span>
 </template>
