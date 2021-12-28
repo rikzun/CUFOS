@@ -1,6 +1,7 @@
 <script lang="ts">
 import Toolbar from "../../hoc/Toolbar.svelte"
 import Desktop from "../../hoc/Desktop.svelte"
+import DevThing from "../../components/DevThing.svelte";
 
 </script>
 
@@ -8,6 +9,7 @@ import Desktop from "../../hoc/Desktop.svelte"
     <div class="display">
         <Toolbar />
         <Desktop />
+        <DevThing />
     </div>
 </template>
 

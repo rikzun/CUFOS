@@ -28,7 +28,7 @@
 </script>
 
 <template>
-    <svelte:window
+    <svelte:body
         on:mousemove={mousemove}
         on:mouseup={mouseup}
     />
