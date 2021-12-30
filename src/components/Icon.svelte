@@ -11,8 +11,3 @@
         {icon}
     </span>
 </template>
-
-<style lang="sass" global>
-    .material-icons
-        user-select: none
-</style>

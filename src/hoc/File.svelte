@@ -7,35 +7,41 @@
     export let top: number
     export let left: number
 
-    let startTop: number | null = null
-    let startLeft: number | null = null
+    let startTop = top
+    let startLeft = left
+
+    let clickTop: number | null = null
+    let clickLeft: number | null = null
 
     function mousedown(e: MouseEvent) {
-        startTop = e.clientY
-        startLeft = e.clientX
+        clickTop = e.clientY
+        clickLeft = e.clientX
     }
 
     function mouseup() {
-        startTop = null
-        startLeft = null
+        clickTop = null
+        clickLeft = null
+        startTop = top
+        startLeft = left
     }
 
     function mousemove(e: MouseEvent) {
-        if (startTop == null || startLeft == null) return
-        top = e.clientY - startTop
-        left = e.clientX - startLeft
+        if (clickTop == null || clickLeft == null) return
+
+        top = startTop + e.clientY - clickTop
+        left = startLeft + e.clientX - clickLeft
     }
 </script>
 
 <template>
-    <svelte:body
+    <svelte:window
         on:mousemove={mousemove}
         on:mouseup={mouseup}
     />
 
     <div class="file-block"
         on:mousedown={mousedown}
-        style={`top: ${top}px; left: ${left}px`}
+        style="top: {top}px; left: {left}px"
     >
         <div class="icon">
             <Icon icon={icon} size="46px" />

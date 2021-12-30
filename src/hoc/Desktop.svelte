@@ -4,12 +4,16 @@ import File from "./File.svelte";
 
 <template>
     <div class="desktop">
-        <File
-            icon="settings"
-            name="Настройки"
-            top={50}
-            left={50}
-        />
+        {#each {length: 11} as _, i}
+            {#each {length: 24} as _, ii}
+                <File
+                    icon="description"
+                    name="File {(24 * i) + ii + 1}"
+                    top={29 + (80 * i)}
+                    left={80 * ii}
+                />
+            {/each}
+        {/each}
     </div>
 </template>
 

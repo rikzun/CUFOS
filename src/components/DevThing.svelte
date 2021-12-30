@@ -1,11 +1,22 @@
 <script lang="ts">
+    let show = false
+
     let screenY: number | null = null
     let screenX: number | null = null
 
     let clientY: number | null = null
     let clientX: number | null = null
 
+    function wheelClick(e: MouseEvent) {
+        if (e.button !== 1) return
+        show = !show
+
+        clientY = e.clientY
+        clientX = e.clientX
+    }
+
     function mousemove(e: MouseEvent) {
+        if (!show) return
         screenY = e.screenY
         screenX = e.screenX
 
@@ -21,11 +32,12 @@
 
 <template>
     <svelte:body
+        on:mouseup={wheelClick}
         on:mousemove={mousemove}
         on:mouseleave={mouseleave}
     />
 
-    {#if clientY != null && clientX != null}
+    {#if show && clientY != null && clientX != null}
         <div class="div-thing" style={`top: ${clientY + 10}px; left: ${clientX + 10}px`}>
             screenY: {screenY}px
             screenX: {screenX}px

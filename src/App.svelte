@@ -24,4 +24,5 @@ import Display from "./core/display/Display.svelte"
 
     *
         box-sizing: border-box
+        user-select: none
 </style>
