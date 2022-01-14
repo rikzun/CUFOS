@@ -1,31 +1,17 @@
 <script lang="ts">
-import Dropdown from "../core/dropdown/Dropdown.svelte";
 import DropdownListContainer from "../core/dropdown/DropdownListContainer.svelte";
 
-let items = [
-    {title: 'unknown'},
-    {title: 'unknown'},
-    {title: 'unknown'},
-    {title: 'unknown'}
-]
 </script>
 
 <template>
     <div class="toolbar-app">
-        <DropdownListContainer>
-            <Dropdown
-                title="unknown"
-                items={items}
-            />
-            <Dropdown
-                title="unknown"
-                items={items}
-            />
-            <Dropdown
-                title="unknown"
-                items={items}
-            />
-        </DropdownListContainer>
+        <DropdownListContainer
+            values={[
+                {title: 'unknown', items: ['1', '2', '3', '4']},
+                {title: 'unknown', items: ['1', '2', '3', '4']},
+                {title: 'unknown', items: ['1', '2', '3', '4']}
+            ]}
+        />
     </div>
 </template>
 
